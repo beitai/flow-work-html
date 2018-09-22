@@ -1,0 +1,12 @@
+<!-- 把分类的改成下拉框。。。 -->
+<div ng-controller="FlowableMultiInstanceCtrl">
+    <!-- <select ng-model="property.value" ng-change="multiInstanceChanged()">
+    	<option>None</option>
+    	<option>Parallel</option>
+    	<option>Sequential</option>
+	</select> -->
+	<select class="form-control"    ng-model="property.value" ng-init="queryParams.category=''" ng-change="multiInstanceChanged()">
+		<option value="">请选择模型分类</option> 
+        <option ng-repeat="item in category" value="{{item.moduleType}}" >{{item.moduleType}}</option>
+    </select>
+</div>

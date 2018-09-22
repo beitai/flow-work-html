@@ -1,0 +1,170 @@
+<div class="container-fluid" ng-show="detailId=='0'">
+  <div class="card card-query">
+    <div class="content">
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="title">状态</h4>
+          <div class="form-group">
+            <select class="form-control" ng-model="queryParams.status">
+              <option value="">全部</option>
+              <option value="0">启用</option>
+              <option value="1">停用</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h4 class="title">标识</h4>
+          <div class="form-group">
+            <input type="text" ng-model="queryParams.key" class="form-control" placeholder="输入表单标识">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <h4 class="title">名称</h4>
+          <div class="input-group form-group">
+            <input type="text" ng-model="queryParams.name" class="form-control" placeholder="输入表单名称">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-info" ng-click="queryFormTable()">搜索</button>
+              <button type="button" class="btn btn-info" ng-click="editFormTable()">创建</button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div ng-pagination ng-model="queryResult.total" changed="queryFormTable" param="queryParams"></div>  
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-sm-6" ng-repeat="item in queryResult.data">
+      <div class="card card-person">
+        <div class="content">
+          <div class="row">
+            <div class="col-xs-12">
+             <span class="property"><label>名称:</label>{{item.name}}</span><br/>
+             <span class="property"><label>标识:</label>{{item.key}}</span><br/>
+             <span class="property"><label>分类:</label>{{item.category}}</span><br/>
+             <span class="property"><label>修改时间:</label>{{item.lastUpdateTime}}</span>
+         	</div>
+          </div>
+          <div class="footer text-right">
+            <hr />
+            <button type="button" class="btn btn-xs btn-info btn-block" ng-click="gotoDetail(item.id)"><i class="fa fa-pencil"></i>编辑</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid" ng-if="detailId!='0'">
+  <div class="card card-detail">
+    <div class="header">
+      <h4 class="title">
+        {{selectedItem.name}}
+        <button type="button" class="btn btn-warning pull-right" ng-click="gotoList()">返回列表</button>
+      </h4>
+    </div>
+    <div class="content">
+      <div class="row">
+        <div class="col-md-10">
+           <span class="property"><label>ID:</label>{{selectedItem.id}}</span>
+           <span class="property"><label>名称:</label>{{selectedItem.name}}</span>
+           <span class="property"><label>标识:</label>{{selectedItem.key}}</span>
+           <span class="property"><label>分类:</label>{{selectedItem.category}}</span>
+           <span class="property"><label>备注:</label>{{selectedItem.remark}}</span>
+           <span class="property"><label>创建时间:</label>{{selectedItem.createTime}}</span>
+           <span class="property"><label>最后修改时间:</label>{{selectedItem.lastUpdateTime}}</span>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-info btn-block" ng-click="editFormTable(selectedItem.id)">编辑</button>
+          <!-- <button type="button" class="btn btn-danger btn-block" ng-click="deleteDefinition(selectedItem)">删除</button> -->
+          <button type="button" class="btn btn-danger btn-block" ng-click="deleteFormTable(selectedItem.id)">删除</button>
+          <button type="button" class="btn btn-info btn-block" ng-click="exportDefinition(selectedItem.id)">部署</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card card-detail">
+    <div class="header">
+      <h4 class="title">
+                  表单字段
+        <button type="button" class="btn btn-info pull-right" ng-click="editFormField()">创建</button>
+      </h4>
+    </div>
+    <div class="content">
+ 	  <table ng-table="fieldTableOptions" class="table table-striped ng-table">
+      </table>
+    </div>
+  </div>
+  
+  <div class="card card-detail">
+    <div class="header">
+      <h4 class="title">
+                  布局设计
+        <button type="button" class="btn btn-info pull-right" ng-click="editFormLayout()">创建</button>
+      </h4>
+    </div>
+    <div class="content">
+ 	  <table ng-table="layoutTableOptions" class="table table-striped ng-table">
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="form-table-edit.html">
+  <div class="form-group" ng-class="{'has-error':editForm.name.$error.required}">
+    <label class="control-label">表单名称</label> 
+    <input type="text" placeholder="表单名称" class="form-control" name="name" ng-model="formData.name" required></input>
+  </div>
+  <div class="form-group" ng-class="{'has-error':editForm.key.$error.required}">
+    <label class="control-label">表单标识</label> 
+    <input type="text" placeholder="表单标识" class="form-control" name="key" ng-model="formData.key" required></input>
+  </div>
+  <div class="form-group" ng-class="{'has-error':editForm.category.$error.required}">
+    <label class="control-label">表单分类</label> 
+    <input type="text" placeholder="表单分类" class="form-control" name="category" ng-model="formData.category" required></input>
+  </div>
+  <div class="form-group">
+    <label class="control-label">备注</label>
+    <textarea placeholder="备注" class="form-control" ng-model="formData.remark" rows="3"></textarea>
+  </div>
+</script>
+
+
+
+<script type="text/ng-template" id="form-field-edit.html">
+  <div class="form-group" ng-class="{'has-error':editForm.name.$error.required}">
+    <label class="control-label">字段名称</label> 
+    <input type="text" placeholder="字段名称" class="form-control" name="name" ng-model="formData.name" required></input>
+  </div>
+  <div class="form-group">
+	<label class="control-label">类型</label> 
+	<div>
+		<label class="radio-inline"> 
+			<input ng-icheck type="radio" ng-model="formData.type" ng-value="0" ng-checked="true" /> varchar
+		</label>
+		<label class="radio-inline"> 
+			<input ng-icheck type="radio" ng-model="formData.type" ng-value="1" /> int
+		</label>
+		<label class="radio-inline"> 
+			<input ng-icheck type="radio" ng-model="formData.type" ng-value="2" /> float
+		</label>
+	</div>
+  </div>
+  <div class="form-group">
+    <label class="control-label">备注</label>
+    <textarea placeholder="备注" class="form-control" ng-model="formData.remark" rows="3"></textarea>
+  </div>
+</script>
+
+
+<script type="text/ng-template" id="form-layout-edit.html">
+  <div class="form-group" ng-class="{'has-error':editForm.name.$error.required}">
+    <label class="control-label">布局名称</label> 
+    <input type="text" placeholder="表单名称" class="form-control" name="name" ng-model="formData.name" required></input>
+  </div>
+  <div class="form-group">
+    <label class="control-label">备注</label>
+    <textarea placeholder="备注" class="form-control" ng-model="formData.remark" rows="3"></textarea>
+  </div>
+</script>
