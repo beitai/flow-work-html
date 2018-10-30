@@ -1,0 +1,13 @@
+{
+  "name": "jquery-grab-bag",
+  "homepage": "https://github.com/jaz303/jquery-grab-bag",
+  "_release": "f1c9627ada",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "f1c9627ada25274f5da9b90b226d05cc166662b8"
+  },
+  "_source": "https://github.com/jaz303/jquery-grab-bag.git",
+  "_target": "*",
+  "_originalSource": "jaz303/jquery-grab-bag"
+}

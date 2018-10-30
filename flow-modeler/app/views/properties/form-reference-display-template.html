@@ -1,0 +1,12 @@
+<!--  这个是安格选择表单时候的。。。。。。。。。。。。 -->
+<div ng-controller="FlowableFormReferenceDisplayCtrl">
+	<!-- <span ng-if="property.value && property.value.id">{{form.key}}</span>
+	<span ng-if="!property.value || !property.value.id" translate>PROPERTY.FORMREFERENCE.EMPTY</span>  -->
+	<!-- {{property.value|limitTo:20}} -->
+	<span ng-if="!property.noValue">{{form.name}}</span>
+	<span ng-if="property.noValue" translate>PROPERTY.FORMREFERENCE.EMPTY</span>
+</div>
+
+<!-- <span ng-if="!property.noValue">{{property.value|limitTo:20}} ??</span>
+<span ng-if="!property.noValue && property.value != null && property.value.length > 20">{{property.value.key}}</span>
+<span ng-if="property.noValue" translate>PROPERTY.EMPTY {{property}}}</span> -->

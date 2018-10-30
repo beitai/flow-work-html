@@ -1,0 +1,13 @@
+# OS X noise
+.DS_Store
+
+# WebStorm
+.idea
+
+# node modules
+node_modules
+package-lock.json
+
+# compass
+.sass-cache
+.project

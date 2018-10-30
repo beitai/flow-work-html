@@ -1,0 +1,183 @@
+
+
+.sidebar .sidebar-wrapper  .nav li > a,
+.off-canvas-sidebar .sidebar-wrapper  .nav li > a {
+  margin: 10px 0px 0px;
+  padding-left: 25px;
+  padding-right: 25px;
+  opacity: .7;
+  white-space: nowrap;
+}
+.sidebar .sidebar-wrapper  .nav p,
+.off-canvas-sidebar .sidebar-wrapper  .nav p {
+  margin: 0;
+  line-height: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  -webkit-transform: translate3d(0px, 0, 0);
+  -moz-transform: translate3d(0px, 0, 0);
+  -o-transform: translate3d(0px, 0, 0);
+  -ms-transform: translate3d(0px, 0, 0);
+  transform: translate3d(0px, 0, 0);
+  opacity: 1;
+  display: block;
+  height: auto;
+  white-space: nowrap;
+}
+.sidebar-wrapper .nav .caret {
+  margin-top: 12px;
+  position: absolute;
+  right: 1px;
+}
+.sidebar .sidebar-wrapper  .nav [data-toggle="collapse"] ~ div > ul > li > a,
+.off-canvas-sidebar .sidebar-wrapper  .nav [data-toggle="collapse"] ~ div > ul > li > a {
+  margin: 0;
+}
+
+a[data-toggle="collapse"][aria-expanded="true"] .caret,
+.btn[data-toggle="collapse"][aria-expanded="true"] .caret,
+a.dropdown-toggle[aria-expanded="true"] .caret {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.sidebar .nav li.active > a[data-toggle]:after,
+.sidebar .nav li.active > a[data-toggle]:before,
+.off-canvas-sidebar .nav li.active > a[data-toggle]:after {
+  display: none;
+}
+
+.sidebar .nav.child{
+	margin-top: 0px;
+    margin-bottom: 0px;
+	margin-left: 20px;
+}
+
+.sidebar .scroller {
+  position: relative;
+}
+
+.right-split {
+	padding-right: 5px;
+	border-right: 1px solid #a4acb9;
+	margin-right: 5px;
+}
+
+
+.input-daterange{
+	width:100%;
+}
+.input-daterange input:first-child{
+	border-radius:3px 0 0 3px;
+}
+.input-daterange input:last-child{
+	border-radius:0 3px 3px 0;
+}
+.input-daterange .input-group-addon{
+	width:auto;
+	min-width:16px;
+	padding:4px 5px;
+	line-height:1.42857143;
+	text-shadow:0 1px 0 #fff;
+	border-width:1px 0;
+	margin-left:-5px;
+	margin-right:-5px;
+}
+
+// .modal-backdrop{
+//   z-index: 0;
+// } 
+//  自己添加的
+.nav-view{
+  display: none;
+}
+// .row-view .col-xs-2:nth-of-type(1){
+//   border-left: 1px solid #a4acb9;
+// }
+// .row-view .col-xs-2{ 
+//   border-top: 1px solid #a4acb9;
+//   border-right: 1px solid #a4acb9;
+// }
+
+// .row-view .col-xs-6:nth-lats-of-type(0){ 
+//   border-right: 0px;
+// }
+// .row-view .col-xs-6{  
+//   border-right: 1px solid #a4acb9;
+// }
+.card{
+  .tab-content{
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+     border: 1px solid #a4acb9; 
+     min-height: 50px;
+    }
+    p{
+      margin: 10px;
+    }
+    .form-group {
+      margin: 0px;
+      padding: 7px; 
+      // height: 48px;
+    }
+  }
+}
+
+
+
+.Area .active{ color: red;}
+.Area{ width: 100%; overflow:hidden; background: #fff; height: 40%; min-height: 300px;}
+.Area ul {padding: 0px;
+  li{
+    list-style-type:none;
+    cursor: pointer;
+  }  
+}
+// overflow-y: auto;
+.Area .block{ height: 100%; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing:border-box; }
+.AreaLeft{ width: 30%; float: left; padding-left: 10px; border-right: 1px solid #ebebeb; min-height: 300px;}
+.AreaLeft ul li{ width: 100%; border-bottom: 1px solid #ebebeb; padding: 15px 0px; line-height: 200%; }
+.AreaCenter{background: #fafafa;  width: 70%; float: left; padding-left: 10px; border-right: 1px solid #e7e7e7;}
+.AreaCenter ul li{ width: 100%; border-bottom: 1px solid #e7e7e7; padding: 15px 0px; line-height: 200%;}
+.AreaRight{background: #f0f0f0; width: 40%; float: left; padding-left: 10px; display: none;}
+.AreaRight ul li{ width: 100%; border-bottom: 1px solid #e7e7e7; padding: 15px 0px; line-height: 200%;}
+
+// 自己写的 层的下选框
+.groupView{
+  position:absolute;
+  width:100%;
+  top:100%;
+  left:0;
+  background:#fff;
+  border-radius:3px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.24);
+  z-index: 2;
+  .groupColumn{
+     padding:6px 0;
+     width:100%;
+    .groupItem{
+      list-style: none;
+      line-height: 36px;
+      font-size: 14px;
+      background-color: #fff;
+      color: #333;
+      padding-left: 20px;
+      cursor: pointer;
+    }
+    .groupItem:hover{
+      background-color: rgb(33, 150, 243);
+      color: #fff;
+    }
+    .groupCreate{
+      color: #2196f3;
+      border-top:1px solid #a4acb9;
+    }
+  }
+}
+// 做搜索栏的 隐藏和显示
+.card-query{
+  display: none;
+}

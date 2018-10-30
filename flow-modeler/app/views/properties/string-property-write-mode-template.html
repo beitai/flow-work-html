@@ -1,0 +1,11 @@
+
+<!--  这个是默文本框 写入的 -->
+<div ng-controller="FlowableStringPropertyCtrl">
+    <input type="text" 
+    ng-model="property.value"
+    	   class="form-control"
+           auto-focus
+           select-text="property.value"
+           ng-blur="inputBlurred()"
+           ng-keypress="enterPressed($event)"/>
+</div>

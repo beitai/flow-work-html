@@ -1,0 +1,14 @@
+{
+  "name": "angular-validator",
+  "homepage": "https://github.com/kelp404/angular-validator",
+  "version": "0.2.9",
+  "_release": "0.2.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.9",
+    "commit": "ecafd4cfeb5bb817c3c6682955df6b163f8c0dd6"
+  },
+  "_source": "https://github.com/kelp404/angular-validator.git",
+  "_target": "^0.2.8",
+  "_originalSource": "angular-validator"
+}

@@ -1,0 +1,66 @@
+{
+  "name": "bootstrap-iconpicker",
+  "description": "Simple Iconpicker for Bootstrap 3.x",
+  "version": "1.9.0",
+  "keywords": [
+    "Bootstrap",
+    "Iconpicker",
+    "Glyphicon",
+    "Font Awesome",
+    "Elusive Icons",
+    "Ionicons",
+    "Map Icons",
+    "Material Design Icons",
+    "Octicons",
+    "Typicons",
+    "Weather Icons",
+    "Flag Icons"
+  ],
+  "license": "MIT",
+  "authers": [
+    {
+      "name": "Victor Valencia Rico",
+      "email": "valencia_vik@hotmail.com",
+      "homepage": "https://github.com/victor-valencia"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://victor-valencia.github.io/bootstrap-iconpicker"
+  },
+  "main": [
+    "dist/js/bootstrap-iconpicker.js",
+    "dist/css/bootstrap-iconpicker.css"
+  ],
+  "ignore": [
+    "/.*",
+    "/css",
+    "/icon-fonts",
+    "/test",
+    "/util",
+    "/src",
+    "banner.js",
+    "bootstrap-iconpicker.png",
+    "gruntfile.js",
+    "index.html",
+    "package.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "jquery": "~1.10.2",
+    "bootstrap": "~3.3.7"
+  },
+  "devDependencies": {
+    "sinonjs": "^1.17.1"
+  },
+  "homepage": "https://github.com/victor-valencia/bootstrap-iconpicker",
+  "_release": "1.9.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.9.0",
+    "commit": "8fb1cb70f0a26392e9ba3c5913995375257d01d9"
+  },
+  "_source": "https://github.com/victor-valencia/bootstrap-iconpicker.git",
+  "_target": "^1.9.0",
+  "_originalSource": "bootstrap-iconpicker"
+}
