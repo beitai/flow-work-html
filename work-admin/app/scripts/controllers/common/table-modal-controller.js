@@ -18,20 +18,20 @@
            '<i class="fa fa-trash-o"></i>&nbsp;删除关联</button>';
       }
     });
-    $scope.category = function(){  
+
       $scope.tableOptions = {
         id : 'tableModal',
         data : 'queryResult',
         isPage : false,
         colModels : $scope.colModels
       };
-    }
-
+  
     $scope.query = function() {
       $scope.service.get({}, function(response) {
         $scope.queryResult = response;
       });
     }; 
+    
     $scope.deleteRow = function(rowId) {
       $scope.service.delete({
         urlPath : '/' + rowId

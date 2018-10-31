@@ -307,104 +307,6 @@
         var watchArrayValue = ['checkbox', 'select', 'multiple-select'];
 
         var overrideId = scope.component.properties.overrideId;
-        // if (overrideId) {
-        //   if (watchArrayValue.indexOf(scope.component.id) < 0) {
-        //     scope.$watch('data[\'' + overrideId + '\']', function (newValue, oldValue) {
-        //       if (angular.isUndefined(newValue)) {
-        //         return;
-        //       }
-        //       if (scope.component.value == newValue) {
-        //         return;
-        //       }
-        //       scope.component.value = newValue;
-        //     });
-
-        //     scope.$watch('component.value', function (newValue, oldValue) {
-        //       if (scope.data[overrideId] == newValue) {
-        //         return;
-        //       }
-        //       scope.data[overrideId] = newValue;
-        //     });
-        //   } else {
-        //     scope.changeDataFlag = false;
-        //     scope.changeValueFlag = false;
-
-        //     scope.$watch('data[\'' + overrideId + '\']', function (newValue, oldValue) {
-        //       if (angular.isUndefined(newValue)) {
-        //         return;
-        //       }
-        //       if (scope.changeDataFlag) {
-        //         scope.changeDataFlag = false;
-        //         return;
-        //       }
-        //       scope.changeValueFlag = true;
-
-        //       var checkedArrayValue = newValue.split(",");
-        //       if (scope.component.id === 'checkbox') {
-        //         angular.forEach(scope.component.properties.options, function (option, index) {
-        //           scope.component.arrayValue[index] = false;
-        //           angular.forEach(checkedArrayValue, function (checkedValue) {
-        //             if (checkedValue == option.value) {
-        //               scope.component.arrayValue[index] = true;
-        //             }
-        //           });
-        //         });
-        //       } else if (scope.component.id === 'select') {
-        //         angular.forEach(checkedArrayValue, function (checkedValue, index) {
-        //           console.info(scope.component.arrayValue[index])
-        //           angular.forEach(scope.component.arrayValue[index].children, function (option) {
-        //             if (checkedValue == option.value) {
-        //               scope.component.arrayValue[index + 1] = option;
-        //             }
-        //           });
-        //         });
-        //       } else if (scope.component.id === 'multiple-select') {
-        //         scope.component.arrayValue = [];
-        //         angular.forEach(checkedArrayValue, function (checkedValue, index) {
-        //           angular.forEach(scope.component.properties.options, function (option) {
-        //             if (checkedValue == option.value) {
-        //               scope.component.arrayValue[index] = option;
-        //             }
-        //           });
-        //         });
-        //       }
-        //     });
-
-        //     scope.$watch('component.arrayValue', function (newValue, oldValue) {
-        //       if (scope.changeValueFlag) {
-        //         scope.changeValueFlag = false;
-        //         return;
-        //       }
-        //       scope.changeDataFlag = true;
-
-        //       var checkedArrayValue = [];
-        //       if (scope.component.id === 'checkbox') {
-        //         angular.forEach(newValue, function (checked, index) {
-        //           if (checked) {
-        //             checkedArrayValue.push(scope.component.properties.options[index].value);
-        //           }
-        //         });
-        //       } else if (scope.component.id === 'select') {
-        //         angular.forEach(newValue, function (checked, index) {
-        //           if (index > 0 && index <= scope.component.properties.level) {
-        //             if (checked) {
-        //               checkedArrayValue.push(checked.value);
-        //             }
-        //           }
-        //         });
-
-        //       } else if (scope.component.id === 'multiple-select') {
-        //         angular.forEach(newValue, function (checked) {
-        //           checkedArrayValue.push(checked.value);
-        //         });
-        //       }
-
-        //       scope.data[overrideId] = checkedArrayValue.join(',');
-        //     }, true);
-        //   }
-
-        // }
-
         return compileTemplate($compile, element, 'component.template', scope);
       }
     };
@@ -434,6 +336,31 @@
         return compileTemplate($compile, element, 'component.template', scope);
       }
     };
-  }])
+  }]).directive('fbHtml', ['$compile', function ($compile) {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attrs) {
+        if (attrs.summernote) {
+          return;
+        }
+
+        scope.fbHtmlConfig = scope.$eval(attrs.fbHtml) || {};
+        scope.fbHtmlConfig.lang = scope.fbHtmlConfig.lang || 'zh-CN';
+
+        scope.$watch(attrs.ngDisabled, function (ngDisabled) {
+          if (ngDisabled) {
+            element.summernote('disable');
+          } else {
+            element.summernote('enable');
+          }
+        });
+        
+        element.removeAttr('fb-html');
+        element.attr('summernote', '');
+        element.attr('config', 'fbHtmlConfig');
+        $compile(element)(scope);
+      }
+    };
+  }]);
   
 })();

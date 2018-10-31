@@ -68,15 +68,17 @@ angular.module('flowableModeler').service('GroupService', ['$http', '$q',
          * Filter functional groups based on a filter text. 根据过滤器文本过滤功能组。
          */
         this.getFilteredGroups = function (filterText) {
-            console.log("组的");
+            console.log("组的"); 
             var params;
             if(filterText) {
                 params = {filter: filterText};
             }
 
+            // params = {'parentId': '0'};
             return httpAsPromise({
                 method: 'GET',
-                url: FLOWABLE.CONFIG.contextRoot2 + '/groups',
+                // url: FLOWABLE.CONFIG.contextRoot2 + '/groups',
+                url: FLOWABLE.CONFIG.contextRoot2 + '/groupChild',
                 params: params
             });
         };

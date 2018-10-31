@@ -120,7 +120,7 @@
     var $builder = $injector.get('$builder');
     $builder.forms.id = 'root';
     $builder.forms.selectedComponent = {};
-    // 这个是获取啥的?  json 里面的数据的 ./stencilset
+    // 这个是获取啥的?  json 里面的数据的 ./stencilset  接口是所有的数组定义
     var getStencilPromise = $http({
       method : 'GET',
       url : restUrl.getStencilSet()
@@ -310,8 +310,8 @@
   } ]).controller('fbComponentsController', [ '$scope', '$injector', function($scope, $injector) {
     var $builder = $injector.get('$builder');
     $scope.groups = $builder.groups;
-
-    $scope.draggableOptions = {
+    // function(_this)
+    $scope.draggableOptions =  {
       connectWith : '.column',
       helper : 'clone',
       handle : '.drag',
@@ -320,10 +320,17 @@
         t.helper.addClass('fb-builder');
       },
       stop : function(e, ui) {
+        // 浪费了一天的时间，  要从不同的角度出发哇。
+        // console.log("----------------------");
+        // console.log(this);
+        // console.log("在这里做父类的  边距缩小"); ;
+        // console.log(ui); 
+        // console.log(ui.item.sortable.model);
+        // console.log(ui.item.sortable.model.type);
         if (jQuery(e.target).hasClass('nav-content') && ui.item.sortable.droptarget && e.target != ui.item.sortable.droptarget[0]) {
-          // clone model to components
+          // clone model to components 克隆模型到组件
           ui.item.sortable.sourceModel.splice(ui.item.sortable.index, 0, ui.item.sortable.model);
-          // component to container
+          // component to container   组件到容器
           var componentModel = angular.copy(ui.item.sortable.model)
           if(angular.isDefined(componentModel.properties.field)){
             if(angular.equals({}, $builder.forms.fields)){
@@ -335,8 +342,9 @@
           }
           ui.item.sortable.droptargetModel.splice(ui.item.sortable.dropindex, 1, componentModel);
         }
-      }
+      },
     };
+    
 //  组件的控制器  动态改变值
   } ]).controller('fbComponentController', [ '$scope', function($scope) {
     $scope.changeColNum = function() {

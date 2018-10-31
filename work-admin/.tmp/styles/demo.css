@@ -88,3 +88,130 @@ a.dropdown-toggle[aria-expanded="true"] .caret {
 .nav-view {
   display: none;
 }
+
+.card .tab-content .col-xs-1, .card .tab-content .col-sm-1, .card .tab-content .col-md-1, .card .tab-content .col-lg-1, .card .tab-content .col-xs-2, .card .tab-content .col-sm-2, .card .tab-content .col-md-2, .card .tab-content .col-lg-2, .card .tab-content .col-xs-3, .card .tab-content .col-sm-3, .card .tab-content .col-md-3, .card .tab-content .col-lg-3, .card .tab-content .col-xs-4, .card .tab-content .col-sm-4, .card .tab-content .col-md-4, .card .tab-content .col-lg-4, .card .tab-content .col-xs-5, .card .tab-content .col-sm-5, .card .tab-content .col-md-5, .card .tab-content .col-lg-5, .card .tab-content .col-xs-6, .card .tab-content .col-sm-6, .card .tab-content .col-md-6, .card .tab-content .col-lg-6, .card .tab-content .col-xs-7, .card .tab-content .col-sm-7, .card .tab-content .col-md-7, .card .tab-content .col-lg-7, .card .tab-content .col-xs-8, .card .tab-content .col-sm-8, .card .tab-content .col-md-8, .card .tab-content .col-lg-8, .card .tab-content .col-xs-9, .card .tab-content .col-sm-9, .card .tab-content .col-md-9, .card .tab-content .col-lg-9, .card .tab-content .col-xs-10, .card .tab-content .col-sm-10, .card .tab-content .col-md-10, .card .tab-content .col-lg-10, .card .tab-content .col-xs-11, .card .tab-content .col-sm-11, .card .tab-content .col-md-11, .card .tab-content .col-lg-11, .card .tab-content .col-xs-12, .card .tab-content .col-sm-12, .card .tab-content .col-md-12, .card .tab-content .col-lg-12 {
+  border: 1px solid #a4acb9;
+  min-height: 50px;
+}
+
+.card .tab-content p {
+  margin: 10px;
+}
+
+.card .tab-content .form-group {
+  margin: 0px;
+  padding: 7px;
+}
+
+.Area .active {
+  color: red;
+}
+
+.Area {
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+  height: 40%;
+  min-height: 300px;
+}
+
+.Area ul {
+  padding: 0px;
+}
+
+.Area ul li {
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.Area .block {
+  height: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.AreaLeft {
+  width: 30%;
+  float: left;
+  padding-left: 10px;
+  border-right: 1px solid #ebebeb;
+  min-height: 300px;
+}
+
+.AreaLeft ul li {
+  width: 100%;
+  border-bottom: 1px solid #ebebeb;
+  padding: 15px 0px;
+  line-height: 200%;
+}
+
+.AreaCenter {
+  background: #fafafa;
+  width: 70%;
+  float: left;
+  padding-left: 10px;
+  border-right: 1px solid #e7e7e7;
+}
+
+.AreaCenter ul li {
+  width: 100%;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 15px 0px;
+  line-height: 200%;
+}
+
+.AreaRight {
+  background: #f0f0f0;
+  width: 40%;
+  float: left;
+  padding-left: 10px;
+  display: none;
+}
+
+.AreaRight ul li {
+  width: 100%;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 15px 0px;
+  line-height: 200%;
+}
+
+.groupView {
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+  z-index: 2;
+}
+
+.groupView .groupColumn {
+  padding: 6px 0;
+  width: 100%;
+}
+
+.groupView .groupColumn .groupItem {
+  list-style: none;
+  line-height: 36px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+.groupView .groupColumn .groupItem:hover {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.groupView .groupColumn .groupCreate {
+  color: #2196f3;
+  border-top: 1px solid #a4acb9;
+}
+
+.card-query {
+  display: none;
+}

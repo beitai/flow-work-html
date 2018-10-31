@@ -12,6 +12,12 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+          <a href="javascript:void(0)" style="background-color: #00bbff;" ng-click="controlquery()" data-toggle="modal" data-target="#myModal">
+            <i class="fa fa-search"></i>
+            <p>搜索</p>
+          </a>
+        </li>
+        <li>
           <a href="javascript:void(0)" style="background-color: #1e88e5;" ng-click="log(loginUser.userId,loginUser.userName)" data-toggle="modal" data-target="#myModal">
             <i class="fa fa-calendar-minus-o"></i>
             <p>日志</p>
@@ -76,7 +82,7 @@
 
 <script type="text/ng-template" id="log.html">
         <div ng-repeat="item in log">
-            <p>{{$index+1}}.    {{name}} {{item.desc}} <span style="float: right;">{{item.createTime}}</span></p>
+            <p>{{$index+1}}.  {{name}} {{item.desc}} <span style="float: right;">{{item.createTime}}</span></p>
           </div>  
 </script>
 

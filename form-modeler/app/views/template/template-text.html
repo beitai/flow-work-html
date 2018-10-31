@@ -1,7 +1,7 @@
 <div class="nav-view form-group">{{component.title}}</div>
-<div class="view form-group" ng-class="{'fb-hidden': component.properties.visible=='hidden'}">
+<div class="view form-group" ng-class="{'fb-hidden': component.properties.visible=='hidden'}" >
 	<label for="{{component.properties.overrideId}}" class="control-label" ng-class="{'required':component.properties.required}">{{component.properties.label}}</label>
-	<div class="">
+	<div>
 		<input type="hidden" fb-dynamic-model="component.properties.overrideId" fb-dynamic-model-pre="data" validator-required="{{component.properties.required}}" validator="{{component.properties.validation}}">
 		
 		<input type="text" class="form-control" id="{{component.properties.overrideId}}" ng-model="component.value" 

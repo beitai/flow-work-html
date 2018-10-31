@@ -4,7 +4,7 @@
 	<span ng-if="!property.value || !property.value.id" >没有对应的用户</span> -->
 	<!-- <span ng-if="!property.value || !property.value.id" translate>PROPERTY.FORMREFERENCE.EMPTY</span> -->
 	<!-- {{property.value|limitTo:20}} -->
-	<span ng-if="!property.noValue">{{form.name}}</span>
+	<span ng-if="!property.noValue"><span ng-repeat="user in users">{{user.name}}<span ng-if="!$last">，</span></span> </span>
 	<span ng-if="property.noValue" translate>没有对应的用户</span>
 </div>
 

@@ -1,63 +1,80 @@
 <div class="container-fluid" ng-show="detailId=='0'">
-  <div class="card card-query">
-    <div class="content">
-      <div class="row">
-        <div class="col-md-6">
-          <h4 class="title">开始时间</h4>
-          <div class="input-daterange input-group form-group">
-            <input type="text" class="form-control" ng-model="queryParams.startedAfter" datetime-picker/>
-            <span class="input-group-addon">
-              <i class="fa fa-exchange"></i>
-            </span>
-            <input type="text" class="form-control" ng-model="queryParams.startedBefore" datetime-picker/>
+    <div class="card card-query">
+      <div class="content">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="col-md-3">
+              <h4 class="title">开始时间</h4>
+            </div>
+            <div class="col-md-9">
+              <div class="input-daterange input-group form-group">
+                <input type="text" class="form-control" ng-model="queryParams.taskCreatedAfter" datetime-picker/>
+                <span class="input-group-addon">
+                  <i class="fa fa-exchange"></i>
+                </span>
+                <input type="text" class="form-control" ng-model="queryParams.taskCreatedBefore" datetime-picker/>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="col-md-3">
+              <h4 class="title">是否完成</h4>
+            </div>
+            <div class="col-md-9">
+              <div class="form-group">
+                <select class="form-control" ng-model="queryParams.finished">
+                  <option value="">全部</option>
+                  <option value="true">是</option>
+                  <option value="false">否</option>
+                </select>
+              </div>
+            </div>
+  
           </div>
         </div>
-         <div class="col-md-6">
-           <h4 class="title">是否完成</h4>
-            <div class="form-group">
-            <select class="form-control" ng-model="queryParams.finished">
-              <option value="">全部</option>
-              <option value="true">是</option>
-              <option value="false">否</option>
-            </select>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="col-md-3">
+              <h4 class="title">结束时间</h4>
+            </div>
+            <div class="col-md-9">
+              <div class="input-daterange input-group form-group">
+                <input type="text" class="form-control" ng-model="queryParams.taskCompletedAfter" datetime-picker/>
+                <span class="input-group-addon">
+                  <i class="fa fa-exchange"></i>
+                </span>
+                <input type="text" class="form-control" ng-model="queryParams.taskCompletedBefore" datetime-picker/>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-      <div class="col-md-6">
-          <h4 class="title">结束时间</h4>
-          <div class="input-daterange input-group form-group">
-            <input type="text" class="form-control" ng-model="queryParams.finishedAfter" datetime-picker/>
-            <span class="input-group-addon">
-              <i class="fa fa-exchange"></i>
-            </span>
-            <input type="text" class="form-control" ng-model="queryParams.finishedBefore" datetime-picker/>
-          </div>
-        </div>
-       
-        <div class="col-md-6">
-          <h4 class="title">流程定义</h4>
-          <div class="input-group form-group">
-            <select class="form-control" chosen  ng-model="queryParams.processDefinitionId" placeholder-text-single="'选择流程定义'" no-results-text = "'没有结果匹配'">
-                <option value="">全部</option>
-                <option ng-repeat="option in definitions" value="{{option.id}}">{{option.name+' (v'+option.version+')'}}</option>
-            </select>
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-info" ng-click="queryInstance()">搜索</button>
-            </span>
+  
+          <div class="col-md-6">
+            <div class="col-md-3">
+              <h4 class="title">流程定义</h4>
+            </div>
+            <div class="col-md-9">
+              <div class="input-group form-group">
+                <select class="form-control" chosen ng-model="queryParams.processDefinitionId" placeholder-text-single="'选择流程定义'" no-results-text="'没有结果匹配'">
+                  <option value="">全部</option>
+                  <option ng-repeat="option in definitions" value="{{option.id}}">{{option.name+' (v'+option.version+')'}}</option>
+                </select>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-info" ng-click="queryTask()">搜索</button>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>  
-  <div class="card">
-    <div class="content">
-      <table ng-table="tableOptions" class="table table-striped ng-table">
-      </table>
+    <div class="card">
+      <div class="content">
+        <table ng-table="tableOptions" class="table table-striped ng-table">
+        </table>
+      </div>
     </div>
   </div>
-</div>
-
+  
 <div class="container-fluid" ng-if="detailId!='0'">
   <div class="card card-detail">
     <div class="header">
@@ -82,12 +99,12 @@
            <div ng-if="selectedItem.endTime == null">
              <span class="property"><label>状态:</label>{{selectedItem.suspended?'挂起':'激活'}}</span>
            </div>
-           <span class="property">
+           <!-- <span class="property">
            	 <label>流程定义:</label>
            	 <a ui-sref="main.flow.definition({id:selectedItem.processDefinitionId})">
            	 	<i class="fa fa-search-plus"></i> {{selectedItem.processDefinitionId}}
           	 </a>
-           </span>
+           </span> -->
            <span class="property">
              <label>父级实例ID:</label>
              <a ui-sref="main.flow.instance({id:selectedItem.superProcessInstanceId})" ng-show="selectedItem.superProcessInstanceId != null">

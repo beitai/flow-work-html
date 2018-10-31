@@ -35,7 +35,8 @@
           delete $window.localStorage.token;
           $rootScope.$state.go('login');
           $rootScope.hideProgress(rejection.data.msg, true);
-        }else if(rejection.data && rejection.data.msg){
+        }
+        else if(rejection.data && rejection.data.msg){
           $rootScope.hideProgress(rejection.data.msg, true);
         }else{
           $rootScope.hideProgress('HTTP请求异常', true);

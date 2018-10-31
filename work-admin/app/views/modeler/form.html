@@ -2,7 +2,7 @@
   <div class="card card-query">
     <div class="content">
       <div class="row">
-        <div class="col-md-3">
+        <!-- <div class="col-md-2">
           <h4 class="title">状态</h4>
           <div class="form-group">
             <select class="form-control" ng-model="queryParams.status">
@@ -11,14 +11,23 @@
               <option value="1">停用</option>
             </select>
           </div>
-        </div>
+        </div> -->
         <div class="col-md-4">
           <h4 class="title">标识</h4>
           <div class="form-group">
             <input type="text" ng-model="queryParams.key" class="form-control" placeholder="输入表单标识">
           </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
+            <h4 class="title">分类</h4>
+            <div class="form-group">
+              <select class="form-control" name="category" ng-model="queryParams.category" ng-init="queryParams.category=''">
+                <option value="">全部</option>
+                <option ng-repeat="item in category" value="{{item.moduleType}}" >{{item.moduleType}}</option>
+              </select> 
+            </div>
+          </div>
+        <div class="col-md-4">
           <h4 class="title">名称</h4>
           <div class="input-group form-group">
             <input type="text" ng-model="queryParams.name" class="form-control" placeholder="输入表单名称">
@@ -88,6 +97,7 @@
     <div class="header">
       <h4 class="title">
                   表单字段
+                  <!-- 这就很牛b了，我居然找不到这个添加方法。。。。 -->
         <button type="button" class="btn btn-info pull-right" ng-click="editFormField()">创建</button>
       </h4>
     </div>
@@ -116,14 +126,30 @@
     <label class="control-label">表单名称</label> 
     <input type="text" placeholder="表单名称" class="form-control" name="name" ng-model="formData.name" required></input>
   </div>
-  <div class="form-group" ng-class="{'has-error':editForm.key.$error.required}">
+  <!-- 表单标识有问题。   加了跟没加一样，后端给自动生成一段代码了。 -->
+  <!-- <div class="form-group" ng-class="{'has-error':editForm.key.$error.required}">
     <label class="control-label">表单标识</label> 
     <input type="text" placeholder="表单标识" class="form-control" name="key" ng-model="formData.key" required></input>
-  </div>
-  <div class="form-group" ng-class="{'has-error':editForm.category.$error.required}">
+  </div> -->
+
+  <!-- <div class="form-group" ng-class="{'has-error':editForm.category.$error.required}">
     <label class="control-label">表单分类</label> 
     <input type="text" placeholder="表单分类" class="form-control" name="category" ng-model="formData.category" required></input>
+  </div> -->
+  <div class="form-group" ng-class="{'has-error':editForm.key.$error.required}" style="position: relative;" >
+      <label class="control-label">表单分类</label>
+      <input type="text" placeholder="表单分类" class="form-control" name="category" ng-model="formData.category" ng-blur="bb()"   ng-focus="aa(formData.category)" ng-change="cc(formData.category)"   required></input>
+      <div class="groupView" ng-show="toggle">
+          <ul class="groupColumn"  >
+            <li class="groupItem" ng-repeat="item in category"  ng-click="selectGroup(item.moduleType)" id="groupColumn">
+              {{item.moduleType}}
+              <div class="pull-right" style="padding-right:15px;"><i id="groupColumn" ng-click="deleteGroup(item.id)"  class="fa fa-trash-o"></i></div>
+             </li>
+             <li class="groupItem groupCreate" ng-show="toggle1" ng-click="selectGroup(formData.category)">创建新分类"{{formData.category}}"</li>
+          </ul>
+      </div>
   </div>
+
   <div class="form-group">
     <label class="control-label">备注</label>
     <textarea placeholder="备注" class="form-control" ng-model="formData.remark" rows="3"></textarea>
@@ -137,7 +163,7 @@
     <label class="control-label">字段名称</label> 
     <input type="text" placeholder="字段名称" class="form-control" name="name" ng-model="formData.name" required></input>
   </div>
-  <div class="form-group">
+  <!-- <div class="form-group">
 	<label class="control-label">类型</label> 
 	<div>
 		<label class="radio-inline"> 
@@ -150,7 +176,34 @@
 			<input ng-icheck type="radio" ng-model="formData.type" ng-value="2" /> float
 		</label>
 	</div>
+  </div> -->
+  
+  <!-- <div class="form-group">
+  <label class="control-label">类型</label>
+  <div>
+    <select ng-model="formData.type" class="form-control">
+        <option ng-repeat="item in category" value="item.id" ng-if="$index>0">{{item.moduleType}}</option>
+        <option ng-repeat="item in category" value="item.id" ng-if="$index==0" ng-selected="1">{{item.moduleType}}</option>
+    </select>
   </div>
+  </div> -->
+  <div class="form-group" style="position:relative;">
+    <label class="control-label">类型</label>
+    <div>
+        <input type="text" placeholder="表单类型" class="form-control" name="category" ng-model="formData.type" ng-blur="bb()"  ng-focus="aa()" ng-change="cc(formData.type)"   required></input>
+        <div class="groupView" ng-show="toggle">
+            <ul class="groupColumn">
+              <!-- {{types}}{{count}}{{item.id}} -->
+              <li class="groupItem" ng-repeat="item in types"  ng-click="selectGroup(item.name)" id="groupColumn" ng-if="count>0">
+                {{item.name}}   
+                <div class="pull-right" style="padding-right:15px;"><i id="groupColumn" ng-click="deleteGroup(item.id)"  class="fa fa-trash-o"></i></div>
+              </li>
+              <li class="groupItem groupCreate" ng-show="toggle1" ng-click="selectGroup(formData.name)" ng-if="count>0">创建新分类" {{formData.type}} "</li>
+            </ul>
+        </div>
+    </div>
+  </div>
+    
   <div class="form-group">
     <label class="control-label">备注</label>
     <textarea placeholder="备注" class="form-control" ng-model="formData.remark" rows="3"></textarea>

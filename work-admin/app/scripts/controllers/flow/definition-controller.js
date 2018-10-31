@@ -7,7 +7,7 @@
 (function() {
   'use strict';
 
-  angular.module('adminApp').controller('FlowDefinitionController', function($scope,$stateParams,$q) {
+  angular.module('adminApp').controller('FlowDefinitionController', function($scope,$stateParams,$q,$timeout) {
     $scope.definitionService = $scope.FlowService($scope.restUrl.flowDefinitions);
     // 流程的定义
     $scope.instanceService = $scope.FlowService($scope.restUrl.flowInstances);
@@ -19,6 +19,7 @@
     $scope.selectedItem = null;
     $scope.categoryService = $scope.IdmService($scope.restUrl.idmTypes);
     $scope.category = null;
+    $scope.taskService = $scope.FlowService($scope.restUrl.flowTasks);
 
     //  详情
     $scope.queryDetail = function(id){
@@ -34,16 +35,16 @@
         params : $scope.queryParams 
       }, function(response) {
         $scope.queryResult = response;
-        console.log($scope.queryResult);
+        console.log($scope.queryResult); 
       });
 
-        // 查询出所有的分类
-        $scope.categoryService.get({ 
+      // 查询出所有的分类
+      $scope.categoryService.get({ 
           urlPath : '/parentId/1'
-        }, function(response) {
-          $scope.category =response; 
-          console.log(response);
-        });
+      }, function(response) {
+        $scope.category =response; 
+          // console.log(response);
+      });
     };
    // 删除流程定义 
     $scope.deleteDefinition = function(item) {
@@ -64,7 +65,7 @@
       });
     };
     
-    //启动流程实例 
+    //启动流程实例 -------------  想办法让  实例启动之后让 页面跳转到 表单填写页面。
     $scope.createInstance = function(item) {
       $scope.editConfirmModal({
         formUrl: 'definition-start.html',
@@ -80,6 +81,24 @@
         }
       });
     };
+
+    
+    // 做树状导航
+    $scope.nav = function(){
+      // console.log("测试");
+      $scope.navModal({
+        id : 'parentId/1',
+        formUrl : 'nav.html',
+        title : '流程开启',
+        key:'nav', 
+        hideFooter: true, 
+        service : $scope.categoryService,
+        // complete : $scope.queryLog
+      });
+    }
+     
+ 
+
     // 导入流程
     $scope.importDefinition = function() {
       $scope.editConfirmModal({
@@ -310,7 +329,10 @@
       $scope.queryDetail($scope.detailId);
     }else{
       $scope.queryDefinition();
-    }
+      // $scope.nav();
+      // $timeout(function(){$scope.nav()},1000); 
+      $scope.nav()
+    } 
     
   });
   

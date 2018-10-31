@@ -81,6 +81,13 @@ FLOWABLE.PROPERTY_CONFIG =
         "readModeTemplateUrl": "views/properties/form-reference-display-template1.html",
         "writeModeTemplateUrl": "views/properties/form-reference-write-template1.html"
     },
+    // 新添加一个启动分组的
+    "oryx-process_potentialstartergroup-string2": {
+        // "readModeTemplateUrl": "views/properties/form-reference-display-template1.html",
+        // "writeModeTemplateUrl": "views/properties/form-reference-write-template1.html"
+        "readModeTemplateUrl": "views/properties/assignment-display-template1.html",
+        "writeModeTemplateUrl": "views/properties/assignment-write-template1.html"
+    },
     "oryx-formreference-complex": {
         "readModeTemplateUrl": "views/properties/form-reference-display-template.html",
         "writeModeTemplateUrl": "views/properties/form-reference-write-template.html"

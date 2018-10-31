@@ -64,7 +64,7 @@
         $scope.queryRole();
       });
     };
-
+    // 显示出对应的关联用户。。
     $scope.queryRoleUser = function(id) {
       $scope.tableModal({
         service : $scope.IdmService($scope.restUrl.idmRoles+'/'+id+'/users'),

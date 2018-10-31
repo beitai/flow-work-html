@@ -95,3 +95,89 @@ a.dropdown-toggle[aria-expanded="true"] .caret {
 .nav-view{
   display: none;
 }
+// .row-view .col-xs-2:nth-of-type(1){
+//   border-left: 1px solid #a4acb9;
+// }
+// .row-view .col-xs-2{ 
+//   border-top: 1px solid #a4acb9;
+//   border-right: 1px solid #a4acb9;
+// }
+
+// .row-view .col-xs-6:nth-lats-of-type(0){ 
+//   border-right: 0px;
+// }
+// .row-view .col-xs-6{  
+//   border-right: 1px solid #a4acb9;
+// }
+.card{
+  .tab-content{
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+     border: 1px solid #a4acb9; 
+     min-height: 50px;
+    }
+    p{
+      margin: 10px;
+    }
+    .form-group {
+      margin: 0px;
+      padding: 7px; 
+      // height: 48px;
+    }
+  }
+}
+
+
+
+.Area .active{ color: red;}
+.Area{ width: 100%; overflow:hidden; background: #fff; height: 40%; min-height: 300px;}
+.Area ul {padding: 0px;
+  li{
+    list-style-type:none;
+    cursor: pointer;
+  }  
+}
+// overflow-y: auto;
+.Area .block{ height: 100%; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing:border-box; }
+.AreaLeft{ width: 30%; float: left; padding-left: 10px; border-right: 1px solid #ebebeb; min-height: 300px;}
+.AreaLeft ul li{ width: 100%; border-bottom: 1px solid #ebebeb; padding: 15px 0px; line-height: 200%; }
+.AreaCenter{background: #fafafa;  width: 70%; float: left; padding-left: 10px; border-right: 1px solid #e7e7e7;}
+.AreaCenter ul li{ width: 100%; border-bottom: 1px solid #e7e7e7; padding: 15px 0px; line-height: 200%;}
+.AreaRight{background: #f0f0f0; width: 40%; float: left; padding-left: 10px; display: none;}
+.AreaRight ul li{ width: 100%; border-bottom: 1px solid #e7e7e7; padding: 15px 0px; line-height: 200%;}
+
+// 自己写的 层的下选框
+.groupView{
+  position:absolute;
+  width:100%;
+  top:100%;
+  left:0;
+  background:#fff;
+  border-radius:3px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.24);
+  z-index: 2;
+  .groupColumn{
+     padding:6px 0;
+     width:100%;
+    .groupItem{
+      list-style: none;
+      line-height: 36px;
+      font-size: 14px;
+      background-color: #fff;
+      color: #333;
+      padding-left: 20px;
+      cursor: pointer;
+    }
+    .groupItem:hover{
+      background-color: rgb(33, 150, 243);
+      color: #fff;
+    }
+    .groupCreate{
+      color: #2196f3;
+      border-top:1px solid #a4acb9;
+    }
+  }
+}
+// 做搜索栏的 隐藏和显示
+.card-query{
+  display: none;
+}

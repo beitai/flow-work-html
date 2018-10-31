@@ -5,8 +5,7 @@
  */
 (function() {
   'use strict';
-
-  angular.module('adminApp').controller('MainController', [ '$scope','$timeout','$window','$q', function($scope,$timeout,$window,$q) {
+  angular.module('adminApp').controller('MainController', [ '$scope','$timeout','$window','$q','$interval', function($scope,$timeout,$window,$q,$interval) {
     $scope.authService = $scope.IdmService($scope.restUrl.idmAuths);
     $scope.loginUser.token = $window.localStorage.token;
     $scope.loginUser.userName = $window.localStorage.userName;
@@ -18,8 +17,28 @@
     $scope.logService = $scope.FlowService($scope.restUrl.log);
     $scope.log = null;
 
+    // 这个是用来判断 token 是否为空， 当token不符合时，对其进行改变
+    // 怎么说呢，当请求中有 token 的时候，进行token判断
+    // $scope.token = $interval( function(){
+    //   console.log($scope.loginUser.token);
+    //   if($scope.loginUser.token== 'null' || $scope.loginUser.token== undefined)
+    //   {
+    //     console.log("退出登录");
+    //     $scope.$state.go('login');
+    //     if($scope.loginUser.token== 'null')
+    //     {
+    //       $interval.cancel($scope.token);
+    //       console.log("取消相应的判断");
+    //     }
+    //   }
+    // }, 1000);  
+    $scope.controlquery = function(){
+      // alert("控制和隐藏搜索"); 
+      $(".card-query").slideToggle();
+    }
+
+
     // 日志
-    
     $scope.queryLog = function() {
       $scope.logService.get({
         urlPath:"/userId/"+$scope.loginUser.userId
@@ -92,10 +111,11 @@
     };
     
     $scope.signOut= function(){
-      localStorage.removeItem('token');
+      $window.localStorage.token = null;
       $scope.$state.go('login');
+      // localStorage.removeItem('token');
     };
-    
+
     $scope.changePwd = function() {
       $scope.editConfirmModal({
         formUrl: 'change-password.html',
@@ -147,7 +167,7 @@
       }
       
       if($scope.menuTitle === null){
-        $scope.$state.go('main.blank');
+        $scope.$state.go('main.blank'); 
       }
       
     };

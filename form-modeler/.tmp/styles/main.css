@@ -143,7 +143,6 @@
 .edit .content-view .fb-builder {
   margin-left: 0px;
   margin-top: 10px;
-  padding: 30px 15px 15px;
   border: 1px solid #DDDDDD;
   border-radius: 4px;
   position: relative;
@@ -156,9 +155,11 @@
   padding-bottom: 1px;
 }
 
-.edit .content-view .fb-builder .box .view {
-  padding-top: 30px;
-  padding-bottom: 5px;
+.edit .content-view .fb-builder .box .remove {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 10;
 }
 
 .edit .content-view .fb-builder .fb-hidden {
@@ -180,8 +181,8 @@
 
 .edit .content-view .fb-builder .remove {
   position: absolute;
-  top: 30px;
-  right: 15px;
+  top: 3px;
+  right: 2px;
   z-index: 10;
 }
 
@@ -196,24 +197,8 @@
   opacity: 1;
 }
 
-.edit .content-view .fb-builder:after {
-  background-color: #F5F5F5;
-  border: 1px solid #DDDDDD;
-  border-radius: 4px 0 4px 0;
-  color: #9DA0A4;
-  content: "表单容器" !important;
-  font-size: 12px;
-  font-weight: bold;
-  left: -1px;
-  padding: 3px 7px;
-  position: absolute;
-  top: -1px;
-}
-
 .edit .box, .edit .lyrow {
   position: relative;
-  margin-top: 5px;
-  margin-bottom: 5px;
 }
 
 .edit .drag {
@@ -223,60 +208,17 @@
   cursor: move;
 }
 
-.edit .row-view:before {
-  background-color: #F5F5F5;
-  border: 1px solid #DDDDDD;
-  border-radius: 4px 0 4px 0;
-  color: #9DA0A4;
-  content: "Row";
-  font-size: 12px;
-  font-weight: bold;
-  left: -1px;
-  line-height: 2;
-  padding: 3px 7px;
-  position: absolute;
-  top: -1px;
-}
-
 .edit .row-view {
-  background-color: #F5F5F5;
-  box-sizing: border-box;
-  box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
   border: 1px solid #DDDDDD;
-  border-radius: 4px 4px 4px 4px;
   margin: 1px 0;
-  position: relative;
-  padding: 25px 0 0;
-}
-
-.edit .row-view .column:after {
-  background-color: #F5F5F5;
-  border: 1px solid #DDDDDD;
-  border-radius: 4px 0 4px 0;
-  color: #9DA0A4;
-  content: "Column";
-  font-size: 12px;
-  font-weight: bold;
-  left: -1px;
-  padding: 3px 7px;
-  position: absolute;
-  top: -1px;
 }
 
 .edit .row-view .column {
   background-color: #FFFFFF;
   border: 1px solid #DDDDDD;
   border-radius: 4px 4px 4px 4px;
-  margin: 15px 0;
-  padding: 39px 19px 24px;
   position: relative;
-}
-
-.edit .ui-draggable {
-  margin-left: -10px;
-  margin-right: -10px;
-  padding-left: 10px;
-  padding-right: 10px;
+  min-height: 40px;
 }
 
 .edit .handle {
@@ -638,6 +580,32 @@ a.language-selected {
   }
 }
 
-.nav-view {
-  display: none;
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 1px;
+  padding-left: 1px;
+}
+
+.form-group {
+  margin-bottom: 0px;
+}
+
+.preview .col-xs-1, .preview .col-sm-1, .preview .col-md-1, .preview .col-lg-1, .preview .col-xs-2, .preview .col-sm-2, .preview .col-md-2, .preview .col-lg-2, .preview .col-xs-3, .preview .col-sm-3, .preview .col-md-3, .preview .col-lg-3, .preview .col-xs-4, .preview .col-sm-4, .preview .col-md-4, .preview .col-lg-4, .preview .col-xs-5, .preview .col-sm-5, .preview .col-md-5, .preview .col-lg-5, .preview .col-xs-6, .preview .col-sm-6, .preview .col-md-6, .preview .col-lg-6, .preview .col-xs-7, .preview .col-sm-7, .preview .col-md-7, .preview .col-lg-7, .preview .col-xs-8, .preview .col-sm-8, .preview .col-md-8, .preview .col-lg-8, .preview .col-xs-9, .preview .col-sm-9, .preview .col-md-9, .preview .col-lg-9, .preview .col-xs-10, .preview .col-sm-10, .preview .col-md-10, .preview .col-lg-10, .preview .col-xs-11, .preview .col-sm-11, .preview .col-md-11, .preview .col-lg-11, .preview .col-xs-12, .preview .col-sm-12, .preview .col-md-12, .preview .col-lg-12 {
+  border: 1px solid #a4acb9;
+  min-height: 50px;
+}
+
+.preview p {
+  margin: 10px;
+}
+
+.preview .form-group {
+  margin: 0px;
+  padding: 7px;
+}
+
+.preview .row {
+  margin-right: -0px;
+  margin-left: -0px;
 }

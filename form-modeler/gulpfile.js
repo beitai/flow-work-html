@@ -18,7 +18,7 @@ var runSequence = require('run-sequence');
 // 配置4个根路径
 var yeoman = {
   app: require('./bower.json').appPath || 'app',
-  dist: 'dist',
+  dist: 'form-modeler',
   tmp:'.tmp',
   module : 'builder'
 };

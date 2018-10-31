@@ -7,9 +7,10 @@
 (function () {
   'use strict';
 
-  angular.module('adminApp').controller('FlowTaskController', function ($scope, $stateParams, $q) {
+  angular.module('adminApp').controller('FlowTaskController', function ($scope, $stateParams, $q,$timeout) {
     $scope.form_definitionService = $scope.FormService($scope.restUrl.formDefinitions);
     $scope.taskService = $scope.FlowService($scope.restUrl.flowTasks);
+    $scope.taskService1 = $scope.FlowService($scope.restUrl.runTasks);
     $scope.instanceService = $scope.FlowService($scope.restUrl.flowInstances);
     $scope.definitionService = $scope.FlowService($scope.restUrl.flowDefinitions);
     $scope.userService = $scope.IdmService($scope.restUrl.idmUsers);
@@ -24,6 +25,7 @@
         $scope.definitions = response.data;
       });
     };
+
     $scope.id = null;
     $scope.queryDetail = function (id) {
       $scope.taskService.get({
@@ -32,32 +34,35 @@
         $scope.selectedItem = response;
         // 表单标识
         console.log("表单标识");
-        console.log($scope.selectedItem);
+        console.log($scope.selectedItem);   
         // console.log($scope.selectedItem.formKey);
-        $scope.form_definitionService.get({
-          urlPath: '/json',
-          params: {
-            processInstanceId: $scope.selectedItem.processInstanceId,
-            formKey: $scope.selectedItem.formKey
-          }
-        }, function (response) {
-          $scope.id = response.bytearrayId
-          // console.log("查询出来的格式 id")
-          // console.log($scope.id);
-          // console.log("查询出来的格式 json 对应值是数组")
-          // console.log(response.json);
-          if (response.json === "") { return; }
-          // console.log($.parseJSON(response.json));
-          $scope.forms1 = $.parseJSON(response.json);
-          if ($scope.forms1.length > 0) {
-            $scope.forms = [];
-            angular.forEach($scope.forms1, function (forms, index) {
-              $scope.forms[index] = {};
-              $scope.forms[index].component = $scope.forms1[index];
-            });
-            console.log($scope.forms);
-          } 
-        });
+        if($scope.selectedItem.formKey!=null && $scope.selectedItem.formKey!=""){
+          $scope.form_definitionService.get({
+            urlPath: '/json',
+            params: {
+              processInstanceId: $scope.selectedItem.processInstanceId,
+              formKey: $scope.selectedItem.formKey
+            }
+          }, function (response) {
+            $scope.id = response.bytearrayId
+            // console.log("查询出来的格式 id")
+            // console.log($scope.id);
+            // console.log("查询出来的格式 json 对应值是数组")
+            // console.log(response.json);
+            if (response.json === "") { return; }
+            // console.log($.parseJSON(response.json));
+            $scope.forms1 = $.parseJSON(response.json);
+            if ($scope.forms1.length > 0) {
+              $scope.forms = [];
+              angular.forEach($scope.forms1, function (forms, index) {
+                $scope.forms[index] = {};
+                $scope.forms[index].component = $scope.forms1[index];
+              });
+              console.log($scope.forms);
+            } 
+          }); 
+        }
+
       });
     };
 
@@ -122,6 +127,14 @@
           }, function () {
             $scope.showSuccessMsg('任务驳回成功');
             $scope.queryDetail(item.id);
+
+            $scope.taskService1.get({  
+              urlPath: '/' + item.id
+              },function(data){
+                console.log(data);
+              });
+
+            $timeout(function(){location.reload()},1000); 
           });
         }
       });
@@ -130,11 +143,53 @@
 
 
     $scope.queryTask = function () {
-      $scope.taskService.get({
-        params: $scope.queryParams
+     
+     
+      $scope.userService.get({
       }, function (response) {
-        $scope.queryResult = response;
+        $scope.users = response;
+
+        // 先让他默认查询负责人的
+        if($scope.queryParams.tasktype==null){
+          $scope.queryParams.tasktype = 'taskAssignee'; 
+        }
+        $scope.taskService.get({
+          params: $scope.queryParams
+        }, function (response) {
+          $scope.queryResult = response; ;
+          // 把负责人的id 改为 名字， 在列表里面。。
+          angular.forEach($scope.queryResult.data,function(each){
+            // console.log(each);
+            if(each.assignee==null)
+            {
+              each.assigneeName = '空';
+            }else{   
+                angular.forEach($scope.users.data,function(user){
+                  if(each.assignee==user.id){
+                      each.assigneeName = user.name
+                    }
+            }); 
+            // var groupsPromise = $scope.userService.get({
+            //   urlPath: '/'+each.assignee
+            // }, function (response) {
+            //   console.log(response);
+            //   each.assigneeName =  response.name
+            // });
+            // var groupsPromise = $scope.userService.get({
+            // }, function (response) {
+              // angular.forEach(response.data,function(each){
+                // if(each.assignee==each.id){
+                  // each.assigneeName = each.name
+                // }
+              // }
+            //   console.log(response);
+            //   each.assigneeName =  response.name
+            // });
+          }
+        }); 
       });
+      
+    });
     };
 
     $scope.editTask = function (item) {
@@ -196,9 +251,21 @@
           $scope.taskService.put({
             urlPath: '/' + item.id + '/complete',
             data: '{"variables":[{"name":"submitType","type":"string","value":"y"}]}'
-          }, function () {
+          }, function (data) {
             $scope.showSuccessMsg('完成任务成功');
             $scope.queryDetail(item.id);
+
+            $scope.taskService1.get({  
+            urlPath: '/' + item.id
+            },function(data){
+              console.log(data);
+            });
+            
+            $timeout(function(){location.reload()},1000); 
+            // console.log("图片的重新获取");
+            // console.log(item.processInstanceId);
+            // console.log($scope.getImageUrl(item.processInstanceId));
+            // $scope.getImageUrl(item.processInstanceId);
           });
         }
       });
@@ -219,7 +286,9 @@
     };
 
     $scope.getImageUrl = function (id) {
+      // var time = new Date().getTime();   
       if (angular.isDefined(id)) {
+        // return $scope.instanceService.url + '/' + id + '/image.png?token=' + $scope.loginUser.token+"?"+time;
         return $scope.instanceService.url + '/' + id + '/image.png?token=' + $scope.loginUser.token;
       }
       return null;
@@ -232,7 +301,8 @@
         { name: '任务ID', index: 'id', width: '7%' },
         { name: '任务名称', index: 'name', width: '8%' },
         { name: '流程标识', index: 'processDefinitionId', sortable: true, width: '8%' },
-        { name: '负责人', index: 'assignee', sortable: true, width: '7%' },
+        // { name: '负责人', index: 'assignee', sortable: true, width: '7%' },
+        { name: '负责人', index: 'assigneeName', sortable: true, width: '7%' },
         { name: '所有人', index: 'owner', sortable: true, width: '7%' },
         { name: '开始时间', index: 'startTime', sortable: true, width: '10%' },
         { name: '结束时间', index: 'endTime', sortable: true, width: '10%' },
@@ -246,7 +316,7 @@
       loadFunction: $scope.queryTask,
       queryParams: $scope.queryParams,
       sortName: 'startTime',
-      sortOrder: 'desc'
+      sortOrder: 'desc',
     };
 
     $scope.queryVariable = function (id) {

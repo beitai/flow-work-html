@@ -508,21 +508,27 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                             delete $scope.outputModel[ index - 1 ][ $scope.spacingProperty ];                                      
                         }
                     });         
-                }
+                } 
             }
 
             // refresh button label
             $scope.refreshButton = function() {
 
                 $scope.varButtonLabel   = '';                
-                var ctr                 = 0;                  
-
+                var ctr                 = 0;           
+                // 自己重新进行了修改。  把一开始单击时候的值给到里面去。 还得改改。
+                if($scope.outputModel === null){
+                    $scope.outputModel =  $scope.inputModel;
+                } 
+                // console.log($scope.outputModel); 
                 // refresh button label...
-                if ( $scope.outputModel.length === 0 ) {
+                // if ( $scope.outputModel.length === 0 ) {
+                if ($scope.outputModel.length === 0) {
                     // https://github.com/isteven/angular-multi-select/pull/19                    
                     $scope.varButtonLabel = $scope.lang.nothingSelected;
+                    // $scope.varButtonLabel = $scope.outputModel
                 }
-                else {                
+                else {          
                     var tempMaxLabels = $scope.outputModel.length;
                     if ( typeof attrs.maxLabels !== 'undefined' && attrs.maxLabels !== '' ) {
                         tempMaxLabels = attrs.maxLabels;

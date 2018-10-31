@@ -115,7 +115,16 @@
         scope : angular.extend($rootScope.$new(),args)
       });
     };
-    
+    // 编辑  新添加一个用来搞联级导航的。
+    $rootScope.navModal = function(args) {
+      $uibModal.open({
+        templateUrl : 'views/common/edit-modal.html',
+        // controller : 'FlowDefinitionController',
+        controller : 'EditModalController',
+        scope : angular.extend($rootScope.$new(),args)
+      });
+    };
+
     $rootScope.editConfirmModal = function (args) {
       $uibModal.open({
         templateUrl: 'views/common/edit-modal.html',
@@ -145,8 +154,11 @@
     };
     // 状态的还不知道干嘛用的      。。。。列表和详细信息？
     // 返回上一层
+    // 用来开启流程图的。
     $rootScope.gotoDetail = function(id){
       $state.go($state.current,{id:id});
+      // console.log($state.current);
+      // console.log(id);
     };
     // 列表 
     $rootScope.gotoList = function(id){
@@ -162,7 +174,7 @@
         nothingSelected : "没有选项被选中" 
     };
     
-    // 也不知道啥意思，很懵B 一秒之后执行的？
+    // 也不知道啥意思，很懵B 一秒之后执行的？  导出
     $rootScope.windowExportFile = function(data,fileName){
       $rootScope.showProgress();
       $timeout(function() {
@@ -178,7 +190,7 @@
         $rootScope.hideProgress();
       }, 1000);
     };
-
+    // to_trusted 是格式化
   }).filter('to_trusted', [ '$sce', function($sce) {
     return function(text) {
       return $sce.trustAsHtml(text);

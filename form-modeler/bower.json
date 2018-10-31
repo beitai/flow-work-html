@@ -9,7 +9,7 @@
     "angular-ui-router": "^1.0.3",
     "angular-validator": "^0.2.8",
     "angular-ui-sortable": "^0.17.1",
-    "angular-ui-tree": "^2.22.5",
+    "angular-ui-tree": "^2.22.5", 
     "angular-summernote": "^0.8.1",
     "angular-chosen-localytics": "~1.3.0",
     "angular-notify": "^2.5.1",

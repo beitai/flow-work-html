@@ -21,8 +21,8 @@ FLOWABLE.CONFIG = {
 	'onPremise' : true,
 	// 'contextRoot' : 'http://work.plumdo.com/flow-service',
 	// 'contextRoot' : 'http://localhost:8082',
-	'contextRoot' : 'http://61.160.207.86:8084',
-	'contextRoot1' : 'http://61.160.207.86:8083',
-	'contextRoot2' : 'http://61.160.207.86:8082',
+	'contextRoot' : 'http://192.168.249.211:8084',
+	'contextRoot1' : 'http://192.168.249.211:8083',
+	'contextRoot2' : 'http://192.168.249.211:8082',
 	'webContextRoot' : './'
 };

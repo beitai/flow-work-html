@@ -19,6 +19,9 @@
     $scope.queryResult = {};
     $scope.selectedItem = null;
 
+    $scope.categoryService = $scope.IdmService($scope.restUrl.idmTypes);
+    $scope.category = null;
+
     // $scope.previewForms = null;
     $scope.forms = [];
 
@@ -27,7 +30,15 @@
       $scope.definitionService.get({
         params: $scope.queryParams
       }, function (response) {
-        $scope.queryResult = response; 
+        $scope.queryResult = response;
+        console.log(response);
+      });
+      // 查询出了表单下的所有分类
+      $scope.categoryService.get({
+        urlPath: '/parentId/2'
+      }, function (response) {
+        $scope.category = response;
+        console.log(response);
       });
     };
     // 信息详情
@@ -38,13 +49,13 @@
         $scope.selectedItem = response;
         // console.log('所有部署的表单：');
         console.log($scope.forms);
-        console.log("key值"); 
+        console.log("key值");
         console.log($scope.selectedItem.key);
-          // urlPath: '/' + $scope.selectedItem.key + '/json'
+        // urlPath: '/' + $scope.selectedItem.key + '/json'
         $scope.definitionService.get({
           urlPath: '/json',
-          params:{
-            formKey:$scope.selectedItem.key
+          params: {
+            formKey: $scope.selectedItem.key
             // processInstanceId:$scope.selectedItem.processInstanceId,
           }
         }, function (response) {
@@ -163,7 +174,8 @@
       colModels: [
         { name: '表单ID', index: 'id', sortable: true, width: '10%' },
         { name: '表单名称', index: 'name', sortable: true, width: '10%' },
-        { name: '标识', index: 'key', sortable: true, width: '10%' },
+        // { name: '标识', index: 'key', sortable: true, width: '10%' },
+        { name: '分类', index: 'category', sortable: true, width: '10%' },
         { name: '版本号', index: 'version', sortable: true, width: '10%' },
         {
           name: '状态', index: 'suspended', width: '11%',
@@ -172,7 +184,7 @@
               'on-label="激活" off-label="挂起" on-change="switchStaus(row,switch)"></toggle-switch>';
           }
         },
-        { name: '备注', index: 'description', width: '12%' },
+        { name: '备注', index: 'remark', width: '12%' },
         {
           name: '操作', index: '', width: '10%',
           formatter: function () {
@@ -336,14 +348,14 @@
       $scope.queryDefinition();
     }
 
-  }).controller('fbBuilderController', [ '$scope', '$injector', '$timeout', function($scope, $injector, $timeout) {
+  }).controller('fbBuilderController', ['$scope', '$injector', '$timeout', function ($scope, $injector, $timeout) {
     // var $builder = $injector.get('$builder');
     // $scope.builderForms = $builder.forms;
     // $scope.sortableOptions = {
     //   connectWith : '.column',
     //   handle : '.drag'
     // };
-//   左边 组件栏的控制器
-  } ]);
+    //   左边 组件栏的控制器
+  }]);
 
 })();

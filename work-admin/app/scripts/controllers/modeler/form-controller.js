@@ -24,6 +24,9 @@
     $scope.queryLayoutParams = {tableId:$scope.detailId};
     $scope.queryLayoutResult = {};
 
+    $scope.categoryService = $scope.IdmService($scope.restUrl.idmTypes);
+    $scope.category = null;
+
     $scope.queryDetail = function(id){
       $scope.formTableService.get({
         urlPath : '/' + id
@@ -37,6 +40,13 @@
         params : $scope.queryParams
       }, function(response) {
         $scope.queryResult = response;
+      });
+      // 查询出了表单下的所有分类
+      $scope.categoryService.get({ 
+        urlPath : '/parentId/2'
+      }, function(response) {
+        $scope.category = response;  
+        console.log(response);
       });
     };
 
@@ -88,6 +98,7 @@
       $scope.editModal({
         id : id,
         formUrl : 'form-table-edit.html',
+        key:"category1",
         title : '表单',
         formData : {},
         service : $scope.formTableService,
@@ -102,12 +113,13 @@
         $scope.queryFieldResult = response;
       });
     };
-    
+    //  这很奇怪。。
     $scope.editFormField = function(id) {
       $scope.editModal({
         id : id,
         formUrl : 'form-field-edit.html',
         title : '字段',
+        key : "types",
         formData : {tableId:$scope.detailId},
         service : $scope.formFieldService,
         complete : $scope.queryFormField
@@ -133,11 +145,12 @@
       data : 'queryFieldResult',
       colModels : [
         {name:'名称',index:'name',sortable:true,width:'10%'},
-        {name:'类型',index:'type',sortable:true,width:'11%',
-          formatter:function(){
-            return '<span>{{row.type=="0"?"varchar":(row.type=="1"?"int":"float")}}</span>';
-          }
-        },
+        // {name:'类型',index:'type',sortable:true,width:'11%',
+        //   formatter:function(){
+        //     return '<span>{{row.type=="0"?"varchar":(row.type=="1"?"int":"float")}}</span>';
+        //   }
+        // },
+        {name:'名称',index:'type',sortable:true,width:'10%'},
         {name:'备注',index:'remark',width:'12%'},
         {name:'创建时间',index:'createTime',sortable:true,width:'12%'},
         {name:'修改时间',index:'lastUpdateTime',sortable:true,width:'12%'},

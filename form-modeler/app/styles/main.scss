@@ -156,7 +156,7 @@
     .fb-builder {
       margin-left: 0px;
       margin-top: 10px;
-      padding: 30px 15px 15px;
+      // padding: 30px 15px 15px;
       border: 1px solid #DDDDDD;
       border-radius: 4px;
       position: relative;
@@ -169,8 +169,20 @@
       }
 
       .box .view {
-        padding-top: 30px;
-        padding-bottom: 5px;
+        // padding-top: 30px;
+        // padding-bottom: 5px;
+      }
+      
+      .box{
+        .remove{
+          position: absolute;
+          // top: 5px;  // top: 30px;
+          // right: 15px; // right: 11px;
+          top: 0px;
+          // right: 10px;
+          right: 0px;
+          z-index: 10;
+        }
       }
 
       .fb-hidden {
@@ -193,8 +205,9 @@
       .remove {
         position: absolute;
         // top: 5px;
-        top: 30px;
-        right: 15px;
+        // right: 12px;
+        top: 3px;
+        right: 2px;
         z-index: 10;
       }
 
@@ -216,25 +229,31 @@
     }
 
     .fb-builder:after {
-      background-color: #F5F5F5;
-      border: 1px solid #DDDDDD;
-      border-radius: 4px 0 4px 0;
-      color: #9DA0A4;
-      content: "表单容器" !important;
-      font-size: 12px;
-      font-weight: bold;
-      left: -1px;
-      padding: 3px 7px;
-      position: absolute;
-      top: -1px;
+      // background-color: #F5F5F5;
+      // border: 1px solid #DDDDDD;
+      // border-radius: 4px 0 4px 0;
+      // color: #9DA0A4;
+      // content: "表单容器" !important;
+      // font-size: 12px;
+      // font-weight: bold;
+      // left: -1px;
+      // padding: 3px 7px;
+      // position: absolute;
+      // top: -1px;
     }
 
   }
 
   .box, .lyrow {
     position: relative;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    // margin-top: 5px;
+    // margin-bottom: 5px;
+    // 删掉
+    // .remove {
+    //     position: absolute;
+    //     top: 0px;
+    //     right: 0px;
+    //  }
   }
 
   .drag {
@@ -245,64 +264,68 @@
   }
 
   .row-view:before {
-    background-color: #F5F5F5;
-    border: 1px solid #DDDDDD;
-    border-radius: 4px 0 4px 0;
-    color: #9DA0A4;
-    content: "Row";
-    font-size: 12px;
-    font-weight: bold;
-    left: -1px;
-    line-height: 2;
-    padding: 3px 7px;
-    position: absolute;
-    top: -1px;
+    // background-color: #F5F5F5;
+    // border: 1px solid #DDDDDD;
+    // border-radius: 4px 0 4px 0;
+    // color: #9DA0A4;
+    // content: "Row";
+    // font-size: 12px;
+    // font-weight: bold;
+    // left: -1px;
+    // line-height: 2;
+    // padding: 3px 7px;
+    // position: absolute;
+    // top: -1px;
   }
   .row-view {
-    background-color: #F5F5F5;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
-    box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+    // background-color: #F5F5F5;
+    // -webkit-box-sizing: border-box;
+    // -moz-box-sizing: border-box;
+    // box-sizing: border-box;
+    // -webkit-box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+    // -moz-box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+    // box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+    // border: 1px solid #DDDDDD;
+    // border-radius: 4px 4px 4px 4px;
+    // margin: 1px 0;
+    // position: relative;
+    // padding: 25px 0 0; 
     border: 1px solid #DDDDDD;
-    border-radius: 4px 4px 4px 4px;
     margin: 1px 0;
-    position: relative;
-    padding: 25px 0 0;
-
+    
     .column:after {
-      background-color: #F5F5F5;
-      border: 1px solid #DDDDDD;
-      border-radius: 4px 0 4px 0;
-      color: #9DA0A4;
-      content: "Column";
-      font-size: 12px;
-      font-weight: bold;
-      left: -1px;
-      padding: 3px 7px;
-      position: absolute;
-      top: -1px;
+      // background-color: #F5F5F5;
+      // border: 1px solid #DDDDDD;
+      // border-radius: 4px 0 4px 0;
+      // color: #9DA0A4;
+      // content: "Column";
+      // font-size: 12px;
+      // font-weight: bold;
+      // left: -1px;
+      // padding: 3px 7px;
+      // position: absolute;
+      // top: -1px;
     }
 
     .column {
       background-color: #FFFFFF;
       border: 1px solid #DDDDDD;
       border-radius: 4px 4px 4px 4px;
-      margin: 15px 0;
-      padding: 39px 19px 24px;
+      // margin: 15px 0;
+      // padding: 39px 19px 24px;
+      // padding: 19px 19px 24px;
+      // padding:20px;
       position: relative;
-
+      min-height: 40px;   
     }
 
   }
 
   .ui-draggable {
-    margin-left: -10px;
-    margin-right: -10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    // margin-left: -10px;
+    // margin-right: -10px;
+    // padding-left: 10px;
+    // padding-right: 10px;
   }
 
   .handle {
@@ -672,7 +695,31 @@ a.language-selected {
   }
 }
 
-//  自己添加的
-.nav-view{
-  display: none;
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 1px;
+  padding-left: 1px;
+}
+.form-group{
+  margin-bottom: 0px;
+}
+
+.preview{ 
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+     border: 1px solid #a4acb9; 
+     min-height: 50px;
+    }
+    p{
+      margin: 10px;
+    }
+    .form-group {
+      margin: 0px;
+      padding: 7px;
+      // height: 48px;
+    } 
+    .row {
+       margin-right: -0px; 
+       margin-left: -0px; 
+  }
 }

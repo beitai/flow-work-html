@@ -118,8 +118,6 @@
               '<i class="fa fa-pencil"></i>&nbsp;编辑</button>'+
               '<button type="button" class="btn btn-xs btn-success" ng-if="row.parentId==0" ng-click=queryChild(row.id)>'+
               '<i class="fa fa-list"></i>&nbsp;下级</button>'+
-              '<button type="button" class="btn btn-xs btn-success" ng-if="row.parentId==1" ng-click=queryGroupUser(row.id)>'+
-              '<i class="fa fa-list"></i>&nbsp;关联用户</button>'+
               '<button type="button" class="btn btn-xs btn-danger" ng-click=deleteGroup(row.id)>'+
               '<i class="fa fa-trash-o"></i>&nbsp;删除</button>'+
               '</div>';

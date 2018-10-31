@@ -22,32 +22,33 @@
           </div>
         </div>
         <div class="col-md-4">
-            <h4 class="title">分类</h4>
-            <div class="form-group"> 
-              <select class="form-control" name="category" ng-model="queryParams.category" ng-init="queryParams.category=''">
-                <option value="">全部</option>
-                <option ng-repeat="item in category" value="{{item.moduleType}}" >{{item.moduleType}}</option>
-              </select>
-            </div>
+          <h4 class="title">分类</h4>
+          <div class="form-group">
+            <select class="form-control" name="category" ng-model="queryParams.category" ng-init="queryParams.category=''">
+              <option value="">全部</option>
+              <option ng-repeat="item in category" value="{{item.moduleType}}">{{item.moduleType}}</option>
+            </select>
           </div>
+        </div>
         <div class="col-md-4">
           <h4 class="title">名称</h4>
           <div class="input-group form-group">
-            <input type="text" ng-model="queryParams.name" class="form-control" placeholder="输入定义名称">
+            <input type="text" ng-model="queryParams.name"  class="form-control" placeholder="输入定义名称">
             <span class="input-group-btn">
               <button type="button" class="btn btn-info" ng-click="queryDefinition()">搜索</button>
               <button type="button" class="btn btn-info" ng-click="importDefinition()">导入</button>
+              <button type="button" class="btn btn-info" ng-click="nav()">多层导航</button>
             </span>
           </div>
         </div>
       </div>
     </div>
-  </div>  
+  </div>
   <div class="card">
     <div class="content">
       <table ng-table="tableOptions" class="table table-striped ng-table">
       </table>
-    </div> 
+    </div>
   </div>
 </div>
 
@@ -62,13 +63,20 @@
     <div class="content">
       <div class="row">
         <div class="col-md-10">
-           <span class="property"><label>ID:</label>{{selectedItem.id}}</span>
-           <span class="property"><label>版本:</label>{{selectedItem.version}}</span>
-           <span class="property"><label>名称:</label>{{selectedItem.name}}</span>
-           <span class="property"><label>标识:</label>{{selectedItem.key}}</span>
-           <span class="property"><label>状态:</label>{{selectedItem.suspended?'挂起':'激活'}}</span>
-           <span class="property"><label>分类:</label>{{selectedItem.category}}</span>
-           <span class="property"><label>描述:</label>{{selectedItem.description}}</span>
+          <span class="property">
+            <label>ID:</label>{{selectedItem.id}}</span>
+          <span class="property">
+            <label>版本:</label>{{selectedItem.version}}</span>
+          <span class="property">
+            <label>名称:</label>{{selectedItem.name}}</span>
+          <span class="property">
+            <label>标识:</label>{{selectedItem.key}}</span>
+          <span class="property">
+            <label>状态:</label>{{selectedItem.suspended?'挂起':'激活'}}</span>
+          <span class="property">
+            <label>分类:</label>{{selectedItem.category}}</span>
+          <span class="property">
+            <label>描述:</label>{{selectedItem.description}}</span>
         </div>
         <div class="col-md-2">
           <button type="button" class="btn btn-info btn-block" ng-click="createInstance(selectedItem)">启动</button>
@@ -85,33 +93,33 @@
       <div class="nav-tabs-navigation">
         <div class="nav-tabs-wrapper">
           <ul uib-tabset active="active" type="tabs">
-              <uib-tab index="0" heading="流程图"></uib-tab>
-              <uib-tab index="1" heading="授权信息（启动）" select="queryIdentity(selectedItem.id)"></uib-tab>
-              <uib-tab index="2" heading="定时任务" select="queryJob(selectedItem.id)"></uib-tab>
-              <uib-tab index="3" heading="流程实例（运行）" select="queryProcess(selectedItem.id)"></uib-tab>
+            <uib-tab index="0" heading="流程图"></uib-tab>
+            <uib-tab index="1" heading="授权信息（启动）" select="queryIdentity(selectedItem.id)"></uib-tab>
+            <uib-tab index="2" heading="定时任务" select="queryJob(selectedItem.id)"></uib-tab>
+            <uib-tab index="3" heading="流程实例（运行）" select="queryProcess(selectedItem.id)"></uib-tab>
           </ul>
         </div>
       </div>
       <div class="tab-content">
-          <div class="tab-pane text-center" ng-class="{'active':active==0}">
-            <img ng-src="{{getImageUrl(selectedItem.id)}}" />
-          </div>
-          <div class="tab-pane" ng-class="{'active':active==1}">
-            <table ng-table="identityTableOptions" class="table table-striped ng-table">
-            </table>
-            <br/>
-            <button type="button" class="btn btn-info btn-block" ng-click="createIdentity(selectedItem.id)">添加授权</button>
-          </div>
-          <div class="tab-pane" ng-class="{'active':active==2}">
-            <table ng-table="jobTableOptions" class="table table-striped ng-table">
-            </table>
-          </div>
-           <div class="tab-pane" ng-class="{'active':active==3}">
-            <table ng-table="processTableOptions" class="table table-striped ng-table">
-            </table>
-            <br/>
-            <button type="button" class="btn btn-info btn-block" ng-click="gotoProcessList(selectedItem.id)">查看全部流程实例</button>
-          </div>
+        <div class="tab-pane text-center" ng-class="{'active':active==0}">
+          <img ng-src="{{getImageUrl(selectedItem.id)}}" />
+        </div>
+        <div class="tab-pane" ng-class="{'active':active==1}">
+          <table ng-table="identityTableOptions" class="table table-striped ng-table">
+          </table>
+          <br/>
+          <button type="button" class="btn btn-info btn-block" ng-click="createIdentity(selectedItem.id)">添加授权</button>
+        </div>
+        <div class="tab-pane" ng-class="{'active':active==2}">
+          <table ng-table="jobTableOptions" class="table table-striped ng-table">
+          </table>
+        </div>
+        <div class="tab-pane" ng-class="{'active':active==3}">
+          <table ng-table="processTableOptions" class="table table-striped ng-table">
+          </table>
+          <br/>
+          <button type="button" class="btn btn-info btn-block" ng-click="gotoProcessList(selectedItem.id)">查看全部流程实例</button>
+        </div>
       </div>
     </div>
   </div>
@@ -223,4 +231,66 @@
 
 <script type="text/ng-template" id="definition-import.html">
   <input type="file" class="form-control" multiple file-input="fileOptions" ng-model="formData.file" >
+</script>
+
+<script type="text/ng-template" id="nav.html"> 
+  <!-- <div class="col-md-2">
+    <lable class="control-label">流程搜索</label>
+  </div>
+  <div class="col-md-10"> 
+      <div class="input-group form-group">
+        <input type="text" ng-model="queryParams.name" class="form-control" placeholder="输入定义名称">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-info" ng-click="queryDefinition()">搜索</button>
+           </span>
+      </div>
+    </div> -->
+  <div class="col-md-12">
+      <h4 class="title" style="margin:10px 0 10px 0;">流程定义</h4>
+      <div class="input-group form-group">
+          <!-- {{count}} --> 
+          <!-- ng-if="option.id!='标识三:1:17539'"  queryParams.processDefinitionId -->
+       <select class="form-control" chosen ng-model="queryParams.name" placeholder-text-single="'选择流程定义'" no-results-text="'没有结果匹配'">
+          <option value="">全部</option>         
+          <option ng-repeat="option in definitions" value="{{option.name}}" > {{option.name+' (v'+option.version+')'}}</option>
+        </select>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-info" ng-click="queryTask()">搜索</button>
+        </span>
+      </div>
+  </div>
+  <div class="Area">
+    <div class="block AreaLeft">
+        <ul>
+              <li class="active" ng-click="b()">工作流</li> 
+          </ul>
+      </div>
+      <div class="block AreaCenter">
+        <ul>
+            <li ng-repeat="item in nav" ng-click="bb(item.moduleType)" ng-class="{'active':item.moduleType==category}">
+                      {{item.moduleType}}  
+            </li>
+            <!-- <button type="button" class="btn btn-danger btn-xs pull-right" data="{{item.moduleType}}" ng-click="aa($event.target)">三级</button> -->
+            <!-- <button type="button" class="btn btn-danger btn-xs pull-right" data="111" ng-click="aa()">三级</button> -->
+            <!--<li ng-repeat="item in category" ng-if="$index==0" class="active" ng-model="queryParams.category" ng-click="aa()">
+                 </li>
+            <li ng-repeat="item in category" ng-if="$index!=0"  ng-model="queryParams.category" ng-click="aa()">
+              {{item.moduleType}}
+            </li> --> 
+        </ul>
+      </div>
+      <div class="block AreaRight">
+        <ul> 
+              <li ng-repeat="item in queryResult">
+              <!-- {{item}} {{item.name}} -->
+              {{item.name}}  (v{{item.version}})
+              <button type="button" class="btn btn-danger btn-xs pull-right" style="margin-right:15px;" ng-click="createInstance1(item.name,item.id)">启动</button>
+              <button type="button" class="btn btn-info btn-xs pull-right" style="margin-right:15px;" ng-click=gotoDetail(item.id)>明细</button>
+            </li>
+            <li ng-if="count==0"> 
+              暂时没有可以启动的流程图
+            </li>  
+        </ul>
+      </div>
+  </div>
 </script>

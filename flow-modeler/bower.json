@@ -28,7 +28,8 @@
     "sizzle": "1.10.16",
     "angular-ui-grid": "3.0.1",
     "prototype.js": "1.7.1",
-    "jquery-grab-bag": "jaz303/jquery-grab-bag"
+    "jquery-grab-bag": "jaz303/jquery-grab-bag",
+    "smalot-bootstrap-datetimepicker": "^2.4.4"
   },
   "devDependencies": {},
   "appPath": "app",
@@ -44,6 +45,13 @@
     "jquery-grab-bag": {
       "main": [
         "javascripts/jquery.autogrow-textarea.js"
+      ]
+    },
+    "smalot-bootstrap-datetimepicker": {
+      "main": [
+        "js/bootstrap-datetimepicker.min.js",
+        "css/bootstrap-datetimepicker.min.css",
+        "js/locales/bootstrap-datetimepicker.zh-CN.js"
       ]
     }
   },

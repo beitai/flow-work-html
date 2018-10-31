@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 'use strict';
-
+// 这个是  顶部的一些控制器方法
 var FLOWABLE = FLOWABLE || {};
 FLOWABLE.TOOLBAR = {
 	ACTIONS : {
@@ -337,7 +337,7 @@ angular.module('flowableModeler').controller('SaveModelCtrl', [ '$rootScope', '$
 	};
 
 	$scope.save = function(successCallback) {
-
+		console.log("这个是保存的方法==========================");
 		if (!$scope.saveDialog.name || $scope.saveDialog.name.length == 0 || !$scope.saveDialog.key || $scope.saveDialog.key.length == 0) {
 
 			return;
@@ -353,6 +353,30 @@ angular.module('flowableModeler').controller('SaveModelCtrl', [ '$rootScope', '$
 		modelMetaData.description = $scope.saveDialog.description;
 
 		var json = editorManager.getModel();
+		// 一整个json的格式
+		// console.log(json);
+		console.log(json.childShapes);
+		angular.forEach(json.childShapes,function(value){
+			// console.log(value.properties)
+			// 名字
+			// console.log(value.properties['name'])
+			// 实例集合（多实例） :
+			// console.log(value.properties['multiinstance_collection'])
+			// 实例集合内元素名称（多实例)
+			// console.log(value.properties['multiinstance_variable'])
+			// 当他的实例集合（多实例） 有定义的时候，赋值为 他名字的加上其他格式。 以实例集合内元素名称（多实例）为判断。  当为null 或者 all时
+			if(value.properties['multiinstance_collection'] != undefined && value.properties['multiinstance_variable']=='all'){
+				value.properties['multiinstance_collection'] = "${"+value.properties['name']+"}"
+			}else if(value.properties['multiinstance_collection'] != undefined && value.properties['multiinstance_variable']==''){
+				value.properties['multiinstance_collection'] = '';
+			}
+			// console.log(value.properties['usertaskassignment']);
+			// value.properties['dueDate'] = "${"+value.properties['name']+"}"
+			// 给到期时间设置值------------------
+			// if(value.properties['name'] != undefined && value.properties['name'] !=''){  
+			// 	value.properties['duedatedefinition'] =   new Date(value.properties['duedatedefinition']);
+			// }
+		})
 
 		var params = {
 			modeltype : modelMetaData.model.modelType,
@@ -385,7 +409,8 @@ angular.module('flowableModeler').controller('SaveModelCtrl', [ '$rootScope', '$
 			url : FLOWABLE.URL.putModel(modelMetaData.modelId)
 		})
 
-		.success(function(data, status, headers, config) {
+		.success(function(data, status, headers, config) { 
+
 			editorManager.handleEvents({
 				type : ORYX.CONFIG.EVENT_SAVED
 			});

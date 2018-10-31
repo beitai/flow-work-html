@@ -6,10 +6,9 @@
  */
 (function() {
   'use strict';
-
+  // ,$validatorProvider
   angular.module('adminApp').controller('ModelerFlowController', function($scope,$window,$stateParams) {
     $scope.modelService = $scope.FlowService($scope.restUrl.flowModels);
-    $scope.categoryService = $scope.IdmService($scope.restUrl.idmTypes);
     $scope.detailId = parseInt($stateParams.id || 0);
     $scope.queryParams = $scope.detailId===0 ? $scope.getCacheParams():{};
     $scope.queryParams.latestVersion = true;
@@ -17,6 +16,8 @@
     $scope.selectedItem = null;
     $scope.lastVersion = false;
     $scope.versionNum = 0;
+    
+    $scope.categoryService = $scope.IdmService($scope.restUrl.idmTypes);
     $scope.category = null;
 
     $scope.queryDetail = function(id){
@@ -28,7 +29,15 @@
         $scope.versionNum = response.version;
       });
     };
-    
+
+    // 做中文的正则判断 
+    // $validatorProvider.register('number', {
+    //   invoke: 'watch',
+    //   validator: /^[-+]?[0-9]*[\.]?[0-9]*$/,
+    //   error: '字段必须是数字.'
+    // });
+    // ^[\u4e00-\u9fa5_a-zA-Z]+$  0-9
+
     $scope.queryModel = function() {
       $scope.modelService.get({
         params : $scope.queryParams
@@ -41,9 +50,10 @@
         urlPath : '/parentId/1'
       }, function(response) {
         $scope.category = response;  
-        console.log(response.data);
+        console.log(response);
       });
     };
+    
 
     $scope.importModel = function() {
       $scope.editConfirmModal({
@@ -95,11 +105,12 @@
       });
     };
     
-    $scope.editModel = function(id) {
+    $scope.editModel = function(id) { 
       $scope.editModal({
         id : id,
         formUrl: 'flow-model-edit.html',
         title : '模型',
+        key : 'category',
         service : $scope.modelService,
         complete : function(){
           if(angular.isDefined(id)){

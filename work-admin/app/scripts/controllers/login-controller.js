@@ -7,14 +7,15 @@
 (function() {
   'use strict';
 
-  angular.module('adminApp').controller('LoginController', [ '$scope','$window', function($scope,$window) {
+  angular.module('adminApp').controller('LoginController', [ '$scope','$window','$interval', function($scope,$window) {
     $scope.user = {};
     $scope.user.account='admin';
-    $scope.user.password='123456';
+    $scope.user.password='admin';
     $scope.authService = $scope.IdmService($scope.restUrl.idmAuths);
     
-    if(angular.isDefined($window.localStorage.token)){
-        $scope.$state.go('main.home');
+    if(angular.isDefined($window.localStorage.token)){  
+      // $scope.$state.go('main.home');
+      $scope.$state.go('login');
     }
     
     $scope.login = function() {
