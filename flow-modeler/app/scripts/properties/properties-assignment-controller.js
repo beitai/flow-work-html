@@ -67,7 +67,8 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl',
                 static: {
                     assignee: undefined,
                     candidateUsers: [],
-                    candidateGroups: []
+                    candidateGroups: [],
+                    candireadUsers: []
                 }, 
             }
         };
@@ -76,8 +77,8 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl',
         $scope.assignmentOptions = [
             { id: "initiator", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.INITIATOR') },
             { id: "user", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.USER') },
-            { id: "users", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.USERS') },
-            { id: "groups", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.GROUPS') }
+            // { id: "users", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.USERS') },
+            // { id: "groups", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.GROUPS') }
         ];
 
         if ($scope.assignment.idm && $scope.assignment.idm.type) {
@@ -135,6 +136,12 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl',
                 $scope.popup.assignmentObject.static.candidateUsers.push($scope.assignment.candidateUsers[i]);
             }
         }
+        // 初始化的。  可阅人
+        if ($scope.assignment.candireadUsers && $scope.assignment.candireadUsers.length > 0) {
+            for (var i = 0; i < $scope.assignment.candireadUsers.length; i++) {
+                $scope.popup.assignmentObject.static.candireadUsers.push($scope.assignment.candireadUsers[i]);
+            }
+        }
 
         if ($scope.assignment.candidateGroups && $scope.assignment.candidateGroups.length > 0) {
             for (var i = 0; i < $scope.assignment.candidateGroups.length; i++) {
@@ -143,7 +150,7 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl',
         }
 
         initStaticContextForEditing($scope);
-
+        // 这个相当于监听？  判断值的改变
         $scope.$watch('popup.groupFilter', function () {
             $scope.updateGroupFilter();
         });
@@ -396,12 +403,23 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl',
             $scope.popup.assignmentObject.idm.assignee = undefined;
         };
 
-        // Click handler for + button after enum value
+        // Click handler for + button after enum value 在枚举值后单击+按钮处理程序
+        $scope.addCandireadUserValue = function (index) {
+            $scope.popup.assignmentObject.static.candireadUsers.splice(index + 1, 0, { value: '' });
+        };
+
+        // Click handler for - button after enum value 在枚举值后单击-按钮处理程序
+        $scope.removeCandireadUserValue = function (index) {
+            $scope.popup.assignmentObject.static.candireadUsers.splice(index, 1);
+        };
+
+
+        // Click handler for + button after enum value 在枚举值后单击+按钮处理程序
         $scope.addCandidateUserValue = function (index) {
             $scope.popup.assignmentObject.static.candidateUsers.splice(index + 1, 0, { value: '' });
         };
 
-        // Click handler for - button after enum value
+        // Click handler for - button after enum value 在枚举值后单击-按钮处理程序
         $scope.removeCandidateUserValue = function (index) {
             $scope.popup.assignmentObject.static.candidateUsers.splice(index, 1);
         };
@@ -492,6 +510,8 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl',
                 $scope.assignment.assignee = $scope.popup.assignmentObject.static.assignee;
                 $scope.assignment.candidateUsers = $scope.popup.assignmentObject.static.candidateUsers;
                 $scope.assignment.candidateGroups = $scope.popup.assignmentObject.static.candidateGroups;
+                //这个是可阅人的赋值 
+                $scope.assignment.candireadUsers = $scope.popup.assignmentObject.static.candireadUsers;
                
                 $scope.assignment.fs = $scope.popup.assignmentObject.fs
                 //  console.log("測試-------------------------")
@@ -601,8 +621,13 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl',
             if (!$scope.popup.assignmentObject.static.candidateUsers || $scope.popup.assignmentObject.static.candidateUsers.length == 0) {
                 $scope.popup.assignmentObject.static.candidateUsers = [{ value: '' }];
             }
+            
             if (!$scope.popup.assignmentObject.static.candidateGroups || $scope.popup.assignmentObject.static.candidateGroups.length == 0) {
                 $scope.popup.assignmentObject.static.candidateGroups = [{ value: '' }];
+            }
+            //可阅人的初始化 
+            if (!$scope.popup.assignmentObject.static.candireadUsers || $scope.popup.assignmentObject.static.candireadUsers.length == 0) {
+                $scope.popup.assignmentObject.static.candireadUsers = [{ value: '' }];
             }
         }
     }]);
