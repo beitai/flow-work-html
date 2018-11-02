@@ -1,0 +1,82 @@
+<!-- 这个是那个按组启动的页面的页面  -->
+<div class="modal" ng-controller="FlowableAssignmentPopupCtrl3">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">&times;</button>
+                <h2 translate>PROPERTY.ASSIGNMENT.TITLE</h2>
+            </div>
+            <div class="modal-body">
+                <div class="detail-group clearfix">
+
+                    <div class="form-group clearfix">
+                        <div class="col-xs-12">
+                            
+                            <label class="col-xs-4">{{'PROPERTY.ASSIGNMENT.TYPE' | translate}}</label>
+
+                            <div class="col-xs-8">
+                                <div class="btn-group btn-group-justified">
+                                    <!-- <div class="btn-group">
+                                        <button type="button" class="btn btn-default" ng-click="popup.assignmentObject.type = 'idm'" ng-model="popup.assignmentObject.type"
+                                            ng-class="{'active' : popup.assignmentObject.type == 'idm'}">
+                                            {{'PROPERTY.ASSIGNMENT.TYPE.IDENTITYSTORE' | translate}}
+                                        </button>
+                                    </div> -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default" ng-click="popup.assignmentObject.type = 'static'" ng-model="popup.assignmentObject.type"
+                                            ng-class="{'active' : popup.assignmentObject.type != 'idm'}">
+                                            {{'PROPERTY.ASSIGNMENT.TYPE.STATIC' | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 静态的负责人 -->  
+                    <div class="form-group clearfix" ng-show="popup.assignmentObject.type != 'idm'">
+                        <div class="col-xs-12">
+                            <label>可阅人:</label>
+                        </div>
+                        <div class="col-xs-12" ng-repeat="candidateUser in popup.assignmentObject.static.candidateUsers">
+                            <!-- <input id="userField" class="form-control" type="text" ng-model="candidateUser.value" /> -->
+                            <!-- {{candidateUser.value}}  -->
+                            <select ng-model="candidateUser.value" class="form-control">
+                                <option ng-repeat="user in popup.userResults" ng-if="candidateUser.value==user.id" value="{{user.id}}" ng-selected="true">{{user.name}}</option>
+                                <option ng-repeat="user in popup.userResults" value="{{user.id}}">{{user.name}}</option>
+                            </select>
+                            <!-- <select class="form-control" ng-model="candidateUser.value" ng-options="y.name for (x, y) in popup.userResults">
+                            </select> -->
+
+                            <i ng-if="popup.assignmentObject.static.candidateUsers.length >1" class="glyphicon glyphicon-minus clickable-property" ng-click="removeCandidateUserValue($index)"></i>
+                            <i ng-if="$index == (popup.assignmentObject.static.candidateUsers.length - 1)" class="glyphicon glyphicon-plus clickable-property"
+                                ng-click="addCandidateUserValue($index)"></i>
+                        </div>
+                    </div>
+
+                     <!-- 静态的 候选组 -->
+                     <!-- <div class="form-group clearfix" ng-show="popup.assignmentObject.type != 'idm'">
+                        <div class="form-group clearfix" ng-show="popup.assignmentObject.type != 'idm'">
+                            <div class="col-xs-12">
+                                <label>可阅人:</label>
+                            </div>
+                             <div class="col-xs-12" ng-repeat="candireadUser in popup.assignmentObject.static.candireadUsers">
+                                   <select ng-model="candireadUser.value" class="form-control">
+                                    <option ng-repeat="user in popup.userResults" ng-if="candireadUser.value==user.id" value="{{user.id}}" ng-selected="true">{{user.name}}</option>
+                                    <option ng-repeat="user in popup.userResults" value="{{user.id}}">{{user.name}}</option>
+                                </select> 
+                                <i ng-if="popup.assignmentObject.static.candireadUsers.length >1" class="glyphicon glyphicon-minus clickable-property" ng-click="removeCandireadUserValue($index)"></i>
+                                <i ng-if="$index == (popup.assignmentObject.static.candireadUsers.length - 1)" class="glyphicon glyphicon-plus clickable-property"
+                                    ng-click="addCandireadUserValue($index)"></i>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="close()" class="btn btn-primary" translate>ACTION.CANCEL</button>
+                <button ng-click="save()" class="btn btn-primary" translate>ACTION.SAVE</button>
+                <!-- <button ng-click="open()" class="btn btn-primary" translate>打开</button> -->
+            </div>
+        </div>
+    </div>

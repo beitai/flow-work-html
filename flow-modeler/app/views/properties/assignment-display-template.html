@@ -3,6 +3,10 @@
     <span ng-if="property.value.assignment.type != 'idm' && property.value.assignment.assignee">{{'PROPERTY.ASSIGNMENT.ASSIGNEE_DISPLAY' | translate:property.value.assignment }} </span>
     <span ng-if="property.value.assignment.type != 'idm' && property.value.assignment.candidateUsers.length > 0">{{'PROPERTY.ASSIGNMENT.CANDIDATE_USERS_DISPLAY' | translate:property.value.assignment.candidateUsers}} </span>
     <span ng-if="property.value.assignment.type != 'idm' && property.value.assignment.candidateGroups.length > 0">{{'PROPERTY.ASSIGNMENT.CANDIDATE_GROUPS_DISPLAY' | translate:property.value.assignment.candidateGroups}} </span>
+    <!-- 可阅人 -->
+    <!-- <span ng-if="property.value.assignment.type != 'idm' && property.value.assignment.candireadUsers.length > 0">{{'PROPERTY.ASSIGNMENT.CANDIREAD_USERS_DISPLAY' | translate:property.value.assignment.candireadUsers}} </span> -->
+    <!-- <span ng-if="property.value.assignment.type != 'idm' && property.value.assignment.candireadUsers.length > 0">{{property.value.assignment.candireadUsers.length}}可阅用户 </span> -->
+    
     <!-- 这个是用户的？？ -->
     <!-- {{'PROPERTY.ASSIGNMENT.USER_IDM_DISPLAY' | translate:property.value.assignment.idm.assignee }}  {{property.value.assignment.idm.assignee.id}} -->
     <span ng-if="property.value.assignment.type == 'idm' && property.value.assignment.idm.assignee && property.value.assignment.idm.assignee.id">{{property.value.assignment.idm.assignee.name}} </span>
@@ -14,7 +18,7 @@
     <span ng-if="property.value.assignment.type == 'idm' && property.value.assignment.idm.candidateGroupFields && property.value.assignment.idm.candidateGroupFields.length > 0 && (!property.value.assignment.idm.candidateGroups || property.value.assignment.idm.candidateGroups.length === 0)">{{'PROPERTY.ASSIGNMENT.CANDIDATE_GROUPS_DISPLAY' | translate:property.value.assignment.idm.candidateGroupFields}} </span>
     <span ng-if="property.value.assignment.type == 'idm' && property.value.assignment.idm.candidateUserFields && property.value.assignment.idm.candidateUserFields.length > 0 && property.value.assignment.idm.candidateUsers && property.value.assignment.idm.candidateUsers.length > 0">{{'PROPERTY.ASSIGNMENT.CANDIDATE_USERS_DISPLAY' | translate:property.value.assignment.idm.candidateUserFields.concat(property.value.assignment.idm.candidateUsers)}} </span>
     <span ng-if="property.value.assignment.type == 'idm' && property.value.assignment.idm.candidateGroupFields && property.value.assignment.idm.candidateGroupFields.length > 0 && property.value.assignment.idm.candidateGroups && property.value.assignment.idm.candidateGroups.length > 0">{{'PROPERTY.ASSIGNMENT.CANDIDATE_GROUPS_DISPLAY' | translate:property.value.assignment.idm.candidateGroupFields.concat(property.value.assignment.idm.candidateGroups)}} </span>
-    <span ng-if="property.value.assignment.type != 'idm' && !property.value.assignment.assignee && (!property.value.assignment.candidateUsers || property.value.assignment.candidateUsers.length == 0) && (!property.value.assignment.candidateGroups || property.value.assignment.candidateGroups.length == 0)" translate>PROPERTY.ASSIGNMENT.EMPTY</span>
+    <span ng-if="property.value.assignment.type != 'idm' && !property.value.assignment.assignee && (!property.value.assignment.candidateUsers || property.value.assignment.candidateUsers.length == 0) && (!property.value.assignment.candireadUsers || property.value.assignment.candireadUsers.length == 0)  && (!property.value.assignment.candidateGroups || property.value.assignment.candidateGroups.length == 0)" translate>PROPERTY.ASSIGNMENT.EMPTY</span>
 <!-- {{property}}
 {{property.value}}
 {{property.value.assignment}}

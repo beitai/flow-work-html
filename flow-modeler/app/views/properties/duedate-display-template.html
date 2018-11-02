@@ -4,5 +4,7 @@
 <span ng-if="property.value && property.value.duedateExpression">{{property.value.duedateExpression}}</span>
 <span ng-if="property.value && property.value.length > 0 && !property.value.duedate && !property.value.duedateExpression">{{property.value}}</span> -->
 <!-- <span ng-if="property.value && property.value.length > 0">{{property.value}}</span> -->
-{{property.value | date:"yyyy-MM-dd HH:mm:ss"}}
-<span ng-if="!property.value || property.value.length === 0" translate>PROPERTY.DUEDATE.EMPTY</span>
+{{property.value}}
+<span ng-if="property.value && property.value.length > 0">{{property.value | date:"yyyy-MM-dd HH:mm:ss"}}</span> 
+<!-- <span ng-if="!property.value || property.value.length === 0" translate>PROPERTY.DUEDATE.EMPTY</span> -->
+<span ng-if="!property.value || property.value == null" translate>PROPERTY.DUEDATE.EMPTY</span>
