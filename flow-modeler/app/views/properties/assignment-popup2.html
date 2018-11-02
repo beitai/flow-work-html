@@ -36,10 +36,9 @@
                     <div class="form-group clearfix" ng-show="popup.assignmentObject.type != 'idm'">
                         <div class="col-xs-12">
                             <label>可阅人:</label>
-                        </div>
+                        </div> 
                         <div class="col-xs-12" ng-repeat="candidateUser in popup.assignmentObject.static.candidateUsers">
-                            <!-- <input id="userField" class="form-control" type="text" ng-model="candidateUser.value" /> -->
-                            <!-- {{candidateUser.value}}  -->
+                            <!-- <input id="userField" class="form-control" type="text" ng-model="candidateUser.value" /> --> 
                             <select ng-model="candidateUser.value" class="form-control">
                                 <option ng-repeat="user in popup.userResults" ng-if="candidateUser.value==user.id" value="{{user.id}}" ng-selected="true">{{user.name}}</option>
                                 <option ng-repeat="user in popup.userResults" value="{{user.id}}">{{user.name}}</option>

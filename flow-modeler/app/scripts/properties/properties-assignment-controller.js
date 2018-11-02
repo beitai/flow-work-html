@@ -145,7 +145,7 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl',
         if ($scope.assignment.assignee) {
             $scope.popup.assignmentObject.static.assignee = $scope.assignment.assignee;
         }
-
+        
         if ($scope.assignment.candidateUsers && $scope.assignment.candidateUsers.length > 0) {
             for (var i = 0; i < $scope.assignment.candidateUsers.length; i++) {
                 $scope.popup.assignmentObject.static.candidateUsers.push($scope.assignment.candidateUsers[i]);
@@ -1251,21 +1251,43 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl1',
         // console.log($scope.property.value);
         if($scope.property.value ==null || $scope.property.value =="" || $scope.property.value==undefined){ 
            console.log("为空不执行")
-        } else{
+        } else{ 
             $scope.property.value = angular.fromJson($scope.property.value)
-            console.log(angular.fromJson($scope.property.value));
+            // console.log(angular.fromJson($scope.property.value));
         }
     }]);
+
+    
+    
 
     // -------------------------------------------
     // 可阅人的控制器 
 angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
 ['$rootScope', '$scope', '$translate', '$http', 'UserService', 'GroupService','$modal', 'editorManager', function ($rootScope, $scope, $translate, $http, UserService, GroupService,$modal,editorManager) {
-    // console.log("默认初始化--") 
-    // $scope.property.value = angular.fromJson($scope.property.value)
-    // console.log(angular.fromJson($scope.property.value));
+    
+    // 当可阅人有值的时候 重新赋值到那个选择框中
+    if ($scope.property.value !== undefined && $scope.property.value !== null){
+        console.log($scope.property.value); 
+        $scope.init = {}
+        $scope.init.assignment = {
+            type: 'staitc',
+            candidateUsers: []
+        }; 
+        // 把只用来分割， 用，割开。  console.log($scope.initvalue);
+        $scope.initvalue = $scope.property.value.split(',');
+        angular.forEach($scope.initvalue,function(value1,key){ 
+            if($scope.initvalue.length == key+1){ 
+                // console.log("逗号不输出，一般最后一个值为逗号。");
+            }else{
+                // console.log("這個是有值的。。。")
+                var json = { value: value1 }
+                // console.log(json) 
+                $scope.init.assignment.candidateUsers.push(json);
+                // console.log($scope.init.assignment.candidateUsers)
+            } 
+        }); 
+    }
 
-    // Put json representing assignment on scope 将json表示为范围的赋值
     if ($scope.property.value !== undefined && $scope.property.value !== null
         && $scope.property.value.assignment !== undefined
         && $scope.property.value.assignment !== null) {
@@ -1276,10 +1298,9 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
         $scope.assignment = { type: 'idm' };
     }
 
-    $scope.assignment.type = 'static';
     $scope.popup = {
         assignmentObject: {
-            type: $scope.assignment.type,
+            type: 'static',
             idm: {
                 type: undefined,
                 assignee: undefined,
@@ -1293,57 +1314,19 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
             }
         }
     };
-
-
-    $scope.assignmentOptions = [
-        // {id: "initiator", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.INITIATOR')},
-        // {id: "user", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.USER')},
-        // {id: "users", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.USERS')},
-        // { id: "groups", title: $translate.instant('PROPERTY.ASSIGNMENT.IDM.DROPDOWN.GROUPS') }
-    ];
-
-    if ($scope.assignment.idm && $scope.assignment.idm.type) {
-        for (var i = 0; i < $scope.assignmentOptions.length; i++) {
-            if ($scope.assignmentOptions[i].id == $scope.assignment.idm.type) {
-                $scope.assignmentOption = $scope.assignmentOptions[i];
-                break;
-            }
+    
+    // 初始化的---------------  要用到。。。  已选择的里面。
+    if ($scope.init.assignment.candidateUsers && $scope.init.assignment.candidateUsers.length > 0) {
+        for (var i = 0; i < $scope.init.assignment.candidateUsers.length; i++) {
+            $scope.popup.assignmentObject.static.candidateUsers.push($scope.init.assignment.candidateUsers[i]);
         }
     }
 
-    // fill the IDM area  填写IDM区域  不知道什么意思
-    if (!$scope.assignmentOption) {
-        // Default, first time opening the popup Default, 默认，第一次打开弹出窗口
-        $scope.assignmentOption = $scope.assignmentOptions[0];
-    } else {
-        // Values already filled   看怎么那个 user的值  $scope.popup.assignmentObject.idm.assignee 表示用户
-        if ($scope.assignment.idm) { //fill the IDM tab
-            if ($scope.assignment.idm.assignee) {
-                if ($scope.assignment.idm.assignee.id) {
-                    $scope.popup.assignmentObject.idm.assignee = $scope.assignment.idm.assignee;
-                } else {
-                    $scope.popup.assignmentObject.idm.assignee = { email: $scope.assignment.idm.assignee.email };
-                }
-            }
-
-            if ($scope.assignment.idm.candidateUsers && $scope.assignment.idm.candidateUsers.length > 0) {
-                for (var i = 0; i < $scope.assignment.idm.candidateUsers.length; i++) {
-                    $scope.popup.assignmentObject.idm.candidateUsers.push($scope.assignment.idm.candidateUsers[i]);
-                }
-            }
-
-            if ($scope.assignment.idm.candidateGroups && $scope.assignment.idm.candidateGroups.length > 0) {
-                for (var i = 0; i < $scope.assignment.idm.candidateGroups.length; i++) {
-                    $scope.popup.assignmentObject.idm.candidateGroups.push($scope.assignment.idm.candidateGroups[i]);
-                }
-            }
-        }
-    }
 
     //fill the static area 填充静态区域
-    if ($scope.assignment.assignee) {
-        $scope.popup.assignmentObject.static.assignee = $scope.assignment.assignee;
-    }
+    // if ($scope.assignment.assignee) {
+    //     $scope.popup.assignmentObject.static.assignee = $scope.assignment.assignee;
+    // }
 
     if ($scope.assignment.candidateUsers && $scope.assignment.candidateUsers.length > 0) {
         for (var i = 0; i < $scope.assignment.candidateUsers.length; i++) {
@@ -1367,6 +1350,7 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
         $scope.updateFilter();
     });
 
+    // 当值有改变时候的过滤器。  用户的
     $scope.updateFilter = function () {
         if ($scope.popup.oldFilter == undefined || $scope.popup.oldFilter != $scope.popup.filter) {
             if (!$scope.popup.filter) {
@@ -1374,9 +1358,7 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
             } else {
                 $scope.popup.oldFilter = $scope.popup.filter;
             }
-            // console.log("判断")
-            // console.log($scope.popup.oldFilter);
-            // console.log($scope.popup.filter);
+
             // if ($scope.popup.filter !== null && $scope.popup.filter !== undefined) {
             UserService.getFilteredUsers($scope.popup.filter).then(function (result) {
                 var filteredUsers = [];
@@ -1401,14 +1383,15 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
                 }
 
                 $scope.popup.userResults = filteredUsers;
-                console.log($scope.popup);
-                console.log($scope.popup.userResults);
+                // console.log($scope.popup);
+                // console.log($scope.popup.userResults);
                 $scope.resetSelection();
             });
             // }
         }
     };
 
+    // 当值有改变时候的过滤器。  组的
     $scope.updateGroupFilter = function () {
         if ($scope.popup.oldGroupFilter == undefined || $scope.popup.oldGroupFilter != $scope.popup.groupFilter) {
             if (!$scope.popup.groupFilter) {
@@ -1455,16 +1438,6 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
         $scope.popup.assignmentObject.static.candidateUsers.splice(index, 1);
     };
 
-    // Click handler for + button after enum value
-    $scope.addCandidateGroupValue = function (index) {
-        $scope.popup.assignmentObject.static.candidateGroups.splice(index + 1, 0, { value: '' });
-    };
-
-    // Click handler for - button after enum value
-    $scope.removeCandidateGroupValue = function (index) {
-        $scope.popup.assignmentObject.static.candidateGroups.splice(index, 1);
-    };
-
     $scope.setSearchType = function () {
         $scope.popup.assignmentObject.assignmentSourceType = 'search';
     };
@@ -1488,23 +1461,28 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
             $scope.assignment.candidateGroups = $scope.popup.assignmentObject.static.candidateGroups;
         }
 
+        // $scope.property.value = {};
+        // $scope.property.value.assignment = $scope.assignment;
 
-        $scope.property.value = {};
-        
-        $scope.property.value.assignment = $scope.assignment;
-        console.log("我想要其他地方拿到这个值怎么拿？？？");
-        console.log($scope.property.value);
-        console.log("最后赋值-------------------  这个是他的值");
-        console.log($scope.property.value.assignment.candidateGroups);
-        $scope.updatePropertyInModel($scope.property);
-        console.log("一次保存成功？？")
+        // console.log("测试==================================="); 
+        console.log($scope.assignment);    
+        $scope.value1 = $scope.assignment.candidateUsers;
+        console.log("循环===================================");      
+        // 把数据里面的用户给赋值到 用户里面去  根据数组id把对应的用户给查出来后，赋值到用户
+        $scope.property.value = ""
+        angular.forEach($scope.value1,function(value,key){
+            // console.log(value.value);
+            $scope.property.value += value.value + ","
+            $scope.updatePropertyInModel($scope.property); 
+        }); 
         console.log($scope.property);    
+
         $scope.close();
 
         // $scope.property.key = "oryx-process_potentialstarteruser"
         
         //  $scope.property.value.assignment.candidateGroups相当于是选中组的值
-        $scope.value1 = $scope.property.value.assignment.candidateUsers;
+        // $scope.value1 = $scope.property.value.assignment.candidateUsers;
         // console.log("循环===================================");     
         // $scope.property.value = []; 
         // 把数据里面的用户给赋值到 用户里面去  根据数组id把对应的用户给查出来后，赋值到用户
@@ -1607,4 +1585,32 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
         }
     }
 }]);
+
+
+
+// -------------------------------------------
+// 可阅人的控制器------------读的。。
+ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl4',
+    ['$rootScope', '$scope', '$translate', '$http', 'UserService', 'GroupService','$modal', 'editorManager', function ($rootScope, $scope, $translate, $http, UserService, GroupService,$modal,editorManager) {
+        // 当可阅人有值的时候
+        if ($scope.property.value !== undefined && $scope.property.value !== null){
+            // console.log($scope.property.value); 
+            $scope.init = {}
+            $scope.init.assignment = {
+                type: 'staitc',
+                candidateUsers: []
+            }; 
+            $scope.initvalue = $scope.property.value.split(','); 
+            angular.forEach($scope.initvalue,function(value1,key){ 
+                if($scope.initvalue.length == key+1){ 
+                    // console.log("逗号不输出");
+                }else{
+                    // console.log("這個是有值的。。。")
+                    var json = { value: value1 }
+                    $scope.init.assignment.candidateUsers.push(json);
+                    // console.log($scope.init.assignment.candidateUsers)
+                } 
+            }); 
+        }
     
+}]);

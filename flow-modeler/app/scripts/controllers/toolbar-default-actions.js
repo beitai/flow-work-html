@@ -541,7 +541,7 @@ angular.module('flowableModeler').controller('ValidateModelCtrl', [ '$scope', '$
 		method : 'POST',
 		cache : false,
 		headers : {
-      		'Token' : editorManager.getToken(),
+      'Token' : editorManager.getToken(),
 			"Content-Type" : "application/json;charset=utf-8"
 		},
 		data : model
