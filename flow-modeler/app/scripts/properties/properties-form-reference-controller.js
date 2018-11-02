@@ -35,11 +35,11 @@ angular.module('flowableModeler').controller('FlowableFormReferenceDisplayCtrl',
     angular.module('flowableModeler').controller('FlowableFormReferenceDisplayCtrl1',
     ['$scope', '$modal', '$http', function ($scope, $modal, $http) { 
         console.log("-----------------------用户"); 
-        console.log($scope.property);
+        // console.log($scope.property);
         $scope.users = [];
         // 把各个用户的id给取出来
         $scope.value = $scope.property.value.split(","); 
-        console.log($scope.value);
+        // console.log($scope.value);
         if ($scope.property && $scope.property.value ) {
             // /form-byteArray/{id}   /app/rest/models/  && $scope.property.value.id
             angular.forEach($scope.value,function(value){

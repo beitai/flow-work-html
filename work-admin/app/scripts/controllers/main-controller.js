@@ -116,25 +116,25 @@
       // localStorage.removeItem('token');
     };
 
-    $scope.changePwd = function() {
-      $scope.editConfirmModal({
-        formUrl: 'change-password.html',
-        title: '修改密码',
-        confirm: function (formData,modalInstance) {
-          if(formData.newPassword !== formData.confirmPassword){
-            $scope.showErrorMsg('新密码重复输入不一致');
-          }else{
-            $scope.authService.put({
-              urlPath : '/password/change',
-              data: angular.extend(formData,{userId:$scope.loginUser.userId})
-            }, function () {
-              $scope.showSuccessMsg('修改密码成功');
-              modalInstance.close();
-            });
-          }
-        }
-      });
-    };
+    // $scope.changePwd = function() {
+    //   $scope.editConfirmModal({
+    //     formUrl: 'change-password.html',
+    //     title: '修改密码',
+    //     confirm: function (formData,modalInstance) {
+    //       if(formData.newPassword !== formData.confirmPassword){
+    //         $scope.showErrorMsg('新密码重复输入不一致');
+    //       }else{
+    //         $scope.authService.put({
+    //           urlPath : '/password/change',
+    //           data: angular.extend(formData,{userId:$scope.loginUser.userId})
+    //         }, function () {
+    //           $scope.showSuccessMsg('修改密码成功');
+    //           modalInstance.close();
+    //         });
+    //       }
+    //     }
+    //   });
+    // };
     
     
     $scope.setMenuTitle = function(statePath){
