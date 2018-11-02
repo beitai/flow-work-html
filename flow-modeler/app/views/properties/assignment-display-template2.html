@@ -1,0 +1,10 @@
+
+<div ng-controller="FlowableAssignmentPopupCtrl4"> 
+    <!-- {{property.value}}
+    {{init.assignment}} -->
+    <span ng-if="init.assignment.type != 'idm' && init.assignment.candidateUsers.length > 0">{{'PROPERTY.ASSIGNMENT.CANDIREAD_USERS_DISPLAY' | translate:init.assignment.candidateUsers}} </span>
+    <!-- 可阅用户 -->
+      <span ng-if="property.value.assignment.type != 'idm' && (init.assignment.candidateUsers.length == 0)" translate>PROPERTY.ASSIGNMENT.EMPTY</span>
+<!-- 流程启动项的。 启动器？？ -->
+    <span ng-if="property.value.assignment.type == 'idm' && !property.value.assignment.idm.assignee && !property.value.assignment.idm.assigneeField && (!property.value.assignment.idm.candidateUsers || property.value.assignment.idm.candidateUsers.length == 0) && (!property.value.assignment.idm.candidateUserFields || property.value.assignment.idm.candidateUserFields.length == 0) && (!property.value.assignment.idm.candidateGroups || property.value.assignment.idm.candidateGroups.length == 0) && (!property.value.assignment.idm.candidateGroupFields || property.value.assignment.idm.candidateGroupFields.length == 0)" translate>PROPERTY.ASSIGNMENT.IDM_EMPTY</span>
+</div>

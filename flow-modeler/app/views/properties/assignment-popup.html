@@ -99,15 +99,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group clearfix" ng-show="popup.assignmentObject.type != 'idm'">
+                    
+                    <!-- {{popup.assignmentObject.static.candidateUsers}}
+                    {{popup.assignmentObject.static.candireadUsers}} -->
+                    <!-- <div class="form-group clearfix" ng-show="popup.assignmentObject.type != 'idm'">
                         <div class="col-xs-12">
                             <label>可阅人:</label>
                         </div>
-                        <!-- {{popup.assignmentObject.static.candidateUsers}}
-                        {{popup.assignmentObject.static.candireadUsers}} -->
                         <div class="col-xs-12" ng-repeat="candireadUser in popup.assignmentObject.static.candireadUsers">
-                            <!-- <input id="userField" class="form-control" type="text" ng-model="candidateUser.value" /> -->
-                            <!-- {{candidateUser}} -->
                              <select ng-model="candireadUser.value" class="form-control">
                                 <option ng-repeat="user in popup.userResults" ng-if="candireadUser.value==user.id" value="{{user.id}}" ng-selected="true">{{user.name}}</option>
                                 <option ng-repeat="user in popup.userResults" value="{{user.id}}">{{user.name}}</option>
@@ -116,7 +115,7 @@
                             <i ng-if="$index == (popup.assignmentObject.static.candireadUsers.length - 1)" class="glyphicon glyphicon-plus clickable-property"
                                 ng-click="addCandireadUserValue($index)"></i>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group clearfix" ng-show="popup.assignmentObject.type == 'idm'">
                         <div class="col-xs-12">

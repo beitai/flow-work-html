@@ -55,6 +55,11 @@ FLOWABLE.PROPERTY_CONFIG =
         "readModeTemplateUrl": "views/properties/assignment-display-template.html",
         "writeModeTemplateUrl": "views/properties/assignment-write-template.html"
     },
+    // 这个是可阅人的
+    "oryx-readusertaskassignment-complex": { 
+        "readModeTemplateUrl": "views/properties/assignment-display-template2.html",
+        "writeModeTemplateUrl": "views/properties/assignment-write-template2.html"
+    },
     "oryx-servicetaskfields-complex": {
         "readModeTemplateUrl": "views/properties/fields-display-template.html",
         "writeModeTemplateUrl": "views/properties/fields-write-template.html"

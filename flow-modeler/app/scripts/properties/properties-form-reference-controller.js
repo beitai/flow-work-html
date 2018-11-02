@@ -35,11 +35,11 @@ angular.module('flowableModeler').controller('FlowableFormReferenceDisplayCtrl',
     angular.module('flowableModeler').controller('FlowableFormReferenceDisplayCtrl1',
     ['$scope', '$modal', '$http', function ($scope, $modal, $http) { 
         console.log("-----------------------用户"); 
-        console.log($scope.property);
+        // console.log($scope.property);
         $scope.users = [];
-        // 把各个用户的id给取出来
+        // 把各个用户的id给取出来 利用 split 和逗号把它分割出来。
         $scope.value = $scope.property.value.split(","); 
-        console.log($scope.value);
+        // console.log($scope.value);
         if ($scope.property && $scope.property.value ) {
             // /form-byteArray/{id}   /app/rest/models/  && $scope.property.value.id
             angular.forEach($scope.value,function(value){
@@ -52,13 +52,10 @@ angular.module('flowableModeler').controller('FlowableFormReferenceDisplayCtrl',
                         //     id: response.id,
                         //     name: response.name, 
                         // };
-                        $scope.users.push(response);
-                        // 所有的启动组
-                        // console.log($scope.users);
+                        $scope.users.push(response); 
                     }); 
             })
         }
-
     }]);
 // 表单
 angular.module('flowableModeler').controller('FlowableFormReferenceCtrl',
