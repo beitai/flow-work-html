@@ -79,7 +79,7 @@
         controller: 'FlowInstanceController',
         templateUrl: 'views/flow/instance.html'
       }).state('main.flow.task', {
-        url: '/task/?:id',
+        url: '/task/?:id:status',
         controller: 'FlowTaskController',
         templateUrl: 'views/flow/task.html'
       }).state('main.flow.form', {

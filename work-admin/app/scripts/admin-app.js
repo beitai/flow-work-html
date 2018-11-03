@@ -160,6 +160,10 @@
       // console.log($state.current);
       // console.log(id);
     };
+    $rootScope.gotoDetail1 = function(id,status){ 
+      //任务的详情，多加了一个 状态，用来判断是否有那个，status
+      $state.go($state.current,{id:id,status:status});  
+    };
     // 列表 
     $rootScope.gotoList = function(id){
       $state.go($state.current,{id:id});

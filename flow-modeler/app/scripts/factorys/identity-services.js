@@ -12,9 +12,10 @@
  */
 'use strict';
 
-angular.module('flowableModeler').service('UserService', ['$http', '$q',
-    function ($http, $q) {
-
+angular.module('flowableModeler').service('UserService', ['$http', '$q','$window',
+    function ($http, $q,$window) {
+        // var token = $window.localStorage.token;
+        // console.log(token);
         var httpAsPromise = function(options) {
             var deferred = $q.defer();
             $http(options).

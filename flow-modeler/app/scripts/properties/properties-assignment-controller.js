@@ -1592,7 +1592,7 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
 // 可阅人的控制器------------读的。。
  angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl4',
     ['$rootScope', '$scope', '$translate', '$http', 'UserService', 'GroupService','$modal', 'editorManager', function ($rootScope, $scope, $translate, $http, UserService, GroupService,$modal,editorManager) {
-        // 当可阅人有值的时候
+        // 当可阅人有值的时候 
         if ($scope.property.value !== undefined && $scope.property.value !== null){
             // console.log($scope.property.value); 
             $scope.init = {}

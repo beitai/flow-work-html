@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  angular.module('adminApp').controller('FlowTaskController', function ($scope, $stateParams, $q,$timeout) {
+  angular.module('adminApp').controller('FlowTaskController', function ($scope, $stateParams, $q,$timeout,$location,$window) {
     $scope.form_definitionService = $scope.FormService($scope.restUrl.formDefinitions);
     $scope.taskService = $scope.FlowService($scope.restUrl.flowTasks);
     $scope.taskService1 = $scope.FlowService($scope.restUrl.runTasks);
@@ -18,7 +18,11 @@
     $scope.queryParams = $scope.detailId === '0' ? $scope.getCacheParams() : {};
     $scope.queryResult = {};
     $scope.selectedItem = null;
+    
 
+
+
+    //这个是定义的流程，用来查询的？ 
     $scope.queryDefinition = function () {
       $scope.definitionService.get({
       }, function (response) {
@@ -26,8 +30,24 @@
       });
     };
 
+    // 查看任务详情的
     $scope.id = null;
-    $scope.queryDetail = function (id) {
+    $scope.queryDetail = function (id,status) {
+      // 把可阅人的的值，通过url给传过来。
+      console.log("这个是可阅人的状态");
+      console.log($location.search().status);
+      $scope.status = $location.search().status;
+
+          // 同步 用户的id 和姓名
+      $scope.userId = $location.search().userId;
+      $scope.userName = $location.search().userName;
+      console.log("id和name同步测试");
+      console.log($scope.userId+" "+$scope.userName);
+      if($scope.userId!=null && $scope.userName!=null){
+        $window.localStorage.userId = $scope.userId;
+        $window.localStorage.userName = $scope.userName;
+        // $scope.loginUser.userName = $window.localStorage.userName;
+      }
       $scope.taskService.get({
         urlPath: '/' + id
       }, function (response) {
@@ -62,7 +82,6 @@
             } 
           }); 
         }
-
       });
     };
 
@@ -303,13 +322,18 @@
         { name: '流程标识', index: 'processDefinitionId', sortable: true, width: '8%' },
         // { name: '负责人', index: 'assignee', sortable: true, width: '7%' },
         { name: '负责人', index: 'assigneeName', sortable: true, width: '7%' },
-        { name: '所有人', index: 'owner', sortable: true, width: '7%' },
+        { name: '所有人', index: 'owner', sortable: true, width: '7%' }, 
+        {name:'状态',index:'status', width: '7%',
+        formatter : function() {
+          return '<span>{{row.status==""?"可操作":"可阅"}}</span>';
+        }
+        },
         { name: '开始时间', index: 'startTime', sortable: true, width: '10%' },
         { name: '结束时间', index: 'endTime', sortable: true, width: '10%' },
         {
           name: '操作', index: '', width: '7%',
           formatter: function () {
-            return '<button type="button" class="btn btn-info btn-xs" ng-click=gotoDetail(row.id)><i class="fa fa-eye"></i>&nbsp;明细</button>';
+            return '<button type="button" class="btn btn-info btn-xs" ng-click=gotoDetail1(row.id,row.status)><i class="fa fa-eye"></i>&nbsp;明细</button>';
           }
         }
       ],
