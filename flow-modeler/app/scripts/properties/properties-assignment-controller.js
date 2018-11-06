@@ -1264,7 +1264,7 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl1',
     // 可阅人的控制器 
 angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
 ['$rootScope', '$scope', '$translate', '$http', 'UserService', 'GroupService','$modal', 'editorManager', function ($rootScope, $scope, $translate, $http, UserService, GroupService,$modal,editorManager) {
-    
+    console.log($scope.property.value);
     // 当可阅人有值的时候 重新赋值到那个选择框中
     if ($scope.property.value !== undefined && $scope.property.value !== null){
         console.log($scope.property.value); 

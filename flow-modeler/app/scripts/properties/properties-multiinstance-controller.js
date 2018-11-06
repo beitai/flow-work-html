@@ -20,7 +20,7 @@ angular.module('flowableModeler').controller('FlowableMultiInstanceCtrl', [ '$sc
 
     if ($scope.property.value == undefined && $scope.property.value == null)
     {
-    	$scope.property.value = 'None';
+    	$scope.property.value = '';
     }
     
     // $scope.querycategory = function(){  
@@ -36,6 +36,7 @@ angular.module('flowableModeler').controller('FlowableMultiInstanceCtrl', [ '$sc
             $scope.category  = response;
             console.log($scope.category);
         })
+
     $scope.multiInstanceChanged = function() {
         // console.log($scope.property);
     	$scope.updatePropertyInModel($scope.property);

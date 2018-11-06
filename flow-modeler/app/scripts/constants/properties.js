@@ -26,10 +26,15 @@ FLOWABLE.PROPERTY_CONFIG =
         "readModeTemplateUrl": "views/properties/default-value-display-template.html",
         "writeModeTemplateUrl": "views/properties/text-property-write-template.html"
     },
-    // 这个是下拉框的哦。。。
+    // 这个是下拉框。。。  用来做类型的。
     "flowable-multiinstance" : {
         "readModeTemplateUrl": "views/properties/default-value-display-template.html",
         "writeModeTemplateUrl": "views/properties/multiinstance-property-write-template.html"
+    },
+    // 这个是下拉框。。。  用来是否可以填写表单的。
+    "flowable-multiinstance1" : {
+        "readModeTemplateUrl": "views/properties/default-value-display-template.html",
+        "writeModeTemplateUrl": "views/properties/multiinstance-property-write-template1.html"
     },
     "flowable-ordering" : {
         "readModeTemplateUrl": "views/properties/default-value-display-template.html",

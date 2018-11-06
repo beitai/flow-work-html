@@ -37,6 +37,7 @@
       idmMenus: '/menus',
       idmTypes: '/moduleTypes',
       log:'/loggers',
+      token:'/auths/token',
       formDesgin : function(modelId,token) {
         // return 'http://localhost:9002/#/design?modelId=' + modelId + '&token='+token;
         return 'http://192.168.249.211:66/form-modeler/#/design?modelId=' + modelId + '&token='+token;

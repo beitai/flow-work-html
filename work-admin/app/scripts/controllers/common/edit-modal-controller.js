@@ -59,6 +59,7 @@
       $scope.service.get({
         urlPath: '/' + $scope.id
       }, function (data) {
+        console.log($scope);
         // $scope.formData = angular.extend($scope.formData, data);
         $scope.log = data;
         $scope.name = $scope.username

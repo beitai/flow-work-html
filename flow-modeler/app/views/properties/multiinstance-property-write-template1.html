@@ -1,0 +1,8 @@
+<!-- 把分类的改成下拉框。。。 -->
+<div ng-controller="FlowableMultiInstanceCtrl">
+    <select  class="form-control"   ng-model="property.value" ng-init="queryParams.category=''"  ng-change="multiInstanceChanged()">
+    	<option value="">是否可以填写表单</option>
+    	<option value="可填">可填</option>
+    	<option value="不可填">不可填</option>
+	</select> 
+</div>

@@ -15,7 +15,7 @@
     $scope.currentState = null;
  
     $scope.logService = $scope.FlowService($scope.restUrl.log);
-    $scope.log = null;
+    // $scope.log = null;
 
     // 这个是用来判断 token 是否为空， 当token不符合时，对其进行改变
     // 怎么说呢，当请求中有 token 的时候，进行token判断
@@ -32,8 +32,9 @@
     //     }
     //   }
     // }, 1000);  
+    
+    // 控制和隐藏搜索; 
     $scope.controlquery = function(){
-      // alert("控制和隐藏搜索"); 
       $(".card-query").slideToggle();
     }
 

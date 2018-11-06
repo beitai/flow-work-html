@@ -122,12 +122,17 @@ a.dropdown-toggle[aria-expanded="true"] .caret {
       margin: 0px;
       padding: 7px; 
       // height: 48px;
+      // input{
+      //   outline: none;
+      //   border: 0px;
+      //   border-bottom: 1px solid; 
+      // }
     }
   }
 }
 
 
-
+// 这个是三层选择的样式。
 .Area .active{ color: red;}
 .Area{ width: 100%; overflow:hidden; background: #fff; height: 40%; min-height: 300px;}
 .Area ul {padding: 0px;

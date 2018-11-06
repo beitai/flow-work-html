@@ -317,7 +317,7 @@
         {name:'流程标识',index:'processDefinitionId'},
         {name:'开始时间',index:'startTime'},
         {name:'业务标识',index:'businessKey'},
-        {name:'操作',index:'',
+        {name:'操作',index:'',  
           formatter:function(){
             return '<button type="button" class="btn btn-info btn-xs" ng-click=gotoProcessDetail(row.id)><i class="fa fa-eye"></i>&nbsp;明细</button>';
           }

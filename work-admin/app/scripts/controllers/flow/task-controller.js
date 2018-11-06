@@ -18,14 +18,27 @@
     $scope.queryParams = $scope.detailId === '0' ? $scope.getCacheParams() : {};
     $scope.queryResult = {};
     $scope.selectedItem = null;
-    
+    // 根据用户名来获取相应的 token 和 name
+    $scope.token = $scope.IdmService($scope.restUrl.token);
 
+    // alert($("input").attr("css")); 
+    $(".card .tab-content .form-group .form-control").css({"border":"0","border-bottom":"1px solid"})
 
-
-    //这个是定义的流程，用来查询的？ 
+    // 流程图日志详情
+    $scope.logService = $scope.FlowService($scope.restUrl.log);
+       $scope.logService.get({
+        urlPath:"/userId/"+$scope.loginUser.userId
+      },function(response){
+        console.log("日志输出成功"); 
+        $scope.log = response; 
+        $scope.name = $window.localStorage.userName;
+      });
+     
+    //这个是定义的流程，  算是搜索的？  
     $scope.queryDefinition = function () {
       $scope.definitionService.get({
       }, function (response) {
+        console.log(response);
         $scope.definitions = response.data;
       });
     };
@@ -33,21 +46,34 @@
     // 查看任务详情的
     $scope.id = null;
     $scope.queryDetail = function (id,status) {
+      var str = $location.search(); 
       // 把可阅人的的值，通过url给传过来。
       console.log("这个是可阅人的状态");
       console.log($location.search().status);
       $scope.status = $location.search().status;
 
-          // 同步 用户的id 和姓名
-      $scope.userId = $location.search().userId;
-      $scope.userName = $location.search().userName;
-      console.log("id和name同步测试");
-      console.log($scope.userId+" "+$scope.userName);
-      if($scope.userId!=null && $scope.userName!=null){
-        $window.localStorage.userId = $scope.userId;
-        $window.localStorage.userName = $scope.userName;
-        // $scope.loginUser.userName = $window.localStorage.userName;
+      // 同步 用户的id 和姓名  
+      $scope.userName = $location.search()["userName"]; 
+      console.log("name用来token的同步测试"); 
+      if($scope.userName!=null){ 
+        // 请求token的接口
+          $scope.token.get({  
+            urlPath:"/"+$scope.userName
+          },function(response){
+            console.log("输出token,name");
+            console.log(response.token);
+            console.log(response.name);  
+            // window.localStorage.token 指的是浏览器本地的缓存
+            $window.localStorage.token = "Bearer "+response.token;
+            $window.localStorage.userName = response.name; 
+            // $scope.loginUser.token 是否是实时指的用户的登录信息?
+            $scope.loginUser.userName = response.name; 
+            $scope.loginUser.token = "Bearer "+response.token;
+            // $window.localStorage.userId = response.userId; 
+            // $scope.loginUser.userId = response.userId;
+          }); 
       }
+
       $scope.taskService.get({
         urlPath: '/' + id
       }, function (response) {
@@ -70,15 +96,41 @@
             // console.log("查询出来的格式 json 对应值是数组")
             // console.log(response.json);
             if (response.json === "") { return; }
-            // console.log($.parseJSON(response.json));
+            
             $scope.forms1 = $.parseJSON(response.json);
+            
             if ($scope.forms1.length > 0) {
-              $scope.forms = [];
-              angular.forEach($scope.forms1, function (forms, index) {
+              $scope.forms = []; 
+              angular.forEach($scope.forms1, function (forms, index) { 
+                // ------------------------------------以下是做表单的是否可填
+                // 拿出各行里面的对应的组件，无论多少个多少放在 .components[0]里面 
+                // console.log($scope.forms1[index].forms);
+                // 这个是根据json的结构， 一行对应的4(会变，但一般有多少个就输多少个)个组件放在$scope.forms1[index].forms里面
+                // angular.forEach($scope.forms1[index].forms,function (value,key){
+                //   // console.log(value);  value.components[0] 输出里面的所有组件   
+                //   // console.log(value.components[0]);
+                //   if(value.components[0]!= undefined ){
+                //     console.log(value.components[0].properties);
+                //     // 这是是根据初始值来判断是文本还是输入框，如果是输入框的话，可以把它的样式进行更改
+                //     if(value.components[0].properties.initValue != undefined ){
+                //       value.components[0].properties.visible = "disabled";
+                //       value.components[0].properties.style.border = "0px";
+                //       value.components[0].properties.style["border-bottom"] = "1px solid";
+                //     }
+                //   }
+                // }) 
+                // console.log($scope.forms1[index].forms[index]);
+                // console.log($scope.forms1[index].forms[index].components[0]); 
+                // console.log($scope.forms1[index].forms[index].components[0].properties); 
+                // if($scope.forms1[index].forms[index].components[0].properties.initValue != undefined ){
+                //   $scope.forms1[index].forms[index].components[0].properties.visible = "disabled";
+                // }
+
                 $scope.forms[index] = {};
                 $scope.forms[index].component = $scope.forms1[index];
               });
-              console.log($scope.forms);
+              // 这个是最后的 在页面输出组件的json 格式
+              // console.log($scope.forms);
             } 
           }); 
         }

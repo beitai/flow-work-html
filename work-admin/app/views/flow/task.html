@@ -168,6 +168,7 @@
             <uib-tab index="0" heading="流程图  " select="queryIdentity(selectedItem.id)"></uib-tab>
             <uib-tab index="1" heading="任务变量" select="queryVariable(selectedItem.id)"></uib-tab>
             <uib-tab index="2" heading="候选信息" select="queryIdentity(selectedItem.id)"></uib-tab>
+            <uib-tab index="4" heading="流程日志" select="querylogs(selectedItem.id)"></uib-tab>
           </ul>
         </div>
       </div>
@@ -200,6 +201,13 @@
           </div>
           <button type="button" class="btn btn-info btn-block" style="margin-top: 10px;" ng-click="subjson(selectedItem.id,forms)"
             ng-show="selectedItem.endTime == null">提交表单数据</button>
+        </div>
+        <div class="tab-pane" ng-class="{'active':active==4}">
+          <!-- <p>用来放流程日志的数据</p> -->
+          <div ng-repeat="item in log">
+            <p>{{$index+1}}.  {{name}} {{item.desc}} <span style="float: right;">{{item.createTime}}</span></p>
+          </div>  
+          
         </div>
       </div>
     </div>
