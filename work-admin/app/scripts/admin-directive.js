@@ -93,8 +93,8 @@
     return {
       restrict : 'A',
       link : function(scope, element, attrs) {
-        var conf = scope[attrs.ngTable];
-        var tableId = conf.id;
+        var conf = scope[attrs.ngTable];  
+        var tableId = conf.id; 
         scope[tableId] = scope[tableId] || {};
         scope[tableId].loadFunction = conf.loadFunction || function() {};
         scope[tableId].queryParams = conf.queryParams || {};

@@ -5,7 +5,7 @@
  */
 (function() {
   'use strict';
-  angular.module('adminApp').controller('MainController', [ '$scope','$timeout','$window','$q','$interval', function($scope,$timeout,$window,$q,$interval) {
+  angular.module('adminApp').controller('MainController', [ '$scope','$timeout','$window','$q','$interval','$location','$cookies', function($scope,$timeout,$window,$q,$interval,$location,$cookies) {
     $scope.authService = $scope.IdmService($scope.restUrl.idmAuths);
     $scope.loginUser.token = $window.localStorage.token;
     $scope.loginUser.userName = $window.localStorage.userName;
@@ -14,25 +14,12 @@
     $scope.menuTitle = null;
     $scope.currentState = null;
  
-    $scope.logService = $scope.FlowService($scope.restUrl.log);
-    // $scope.log = null;
+    $scope.logService = $scope.FlowService($scope.restUrl.log);   
 
-    // 这个是用来判断 token 是否为空， 当token不符合时，对其进行改变
-    // 怎么说呢，当请求中有 token 的时候，进行token判断
-    // $scope.token = $interval( function(){
-    //   console.log($scope.loginUser.token);
-    //   if($scope.loginUser.token== 'null' || $scope.loginUser.token== undefined)
-    //   {
-    //     console.log("退出登录");
-    //     $scope.$state.go('login');
-    //     if($scope.loginUser.token== 'null')
-    //     {
-    //       $interval.cancel($scope.token);
-    //       console.log("取消相应的判断");
-    //     }
-    //   }
-    // }, 1000);  
-    
+    // 设置cookie的测试
+    // console.log("添加cookie")
+    // $cookies.put('userName','wws'); 
+
     // 控制和隐藏搜索; 
     $scope.controlquery = function(){
       $(".card-query").slideToggle();
@@ -113,7 +100,8 @@
     
     $scope.signOut= function(){
       $window.localStorage.token = null;
-      $scope.$state.go('login');
+      $window.localStorage.access_token = null;
+      $scope.$state.go('login');  
       // localStorage.removeItem('token');
     };
 
@@ -139,10 +127,10 @@
     
     
     $scope.setMenuTitle = function(statePath){
-      if(angular.isUndefined($window.localStorage.token)){
-        $scope.$state.go('login');
-        return;
-      }
+      // if(angular.isUndefined($window.localStorage.token)){
+      //   $scope.$state.go('login');
+      //   return;
+      // }
       $scope.currentState = statePath;
       $scope.menuTitle = null;
       var pathArray = statePath.split('.');
@@ -172,14 +160,25 @@
       }
       
     };
-    
-    
-    var menusPromise = $scope.authService.get({
-      urlPath : '/menus',
-      params : {userId:$scope.loginUser.userId||0}
-    }, function(response) {
-      $scope.menuItems = response;
-    });
+
+    //  这个是来做，第一次跳转到这个页面，没$scope.loginUser.userId 的处理  
+    $scope.userId = $location.search()["userId"];  
+    if($scope.userId!= null){   
+      var menusPromise = $scope.authService.get({
+        urlPath : '/menus',
+        params : {userId:$scope.userId||0} 
+      }, function(response) {
+        $scope.menuItems = response;
+      });
+    }else{
+      var menusPromise = $scope.authService.get({
+        urlPath : '/menus',
+        params : {userId:$scope.loginUser.userId||0} 
+      }, function(response) {
+        $scope.menuItems = response;
+      });
+    }
+
 
     $q.all([menusPromise]).then(function() {  
       $scope.setMenuTitle($scope.$state.current.name);

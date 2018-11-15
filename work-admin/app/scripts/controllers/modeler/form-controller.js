@@ -41,12 +41,12 @@
       }, function(response) {
         $scope.queryResult = response;
       });
+
       // 查询出了表单下的所有分类
       $scope.categoryService.get({ 
         urlPath : '/parentId/2'
       }, function(response) {
-        $scope.category = response;  
-        console.log(response);
+        $scope.category = response;   
       });
     };
 
@@ -59,8 +59,8 @@
             urlPath : '/' + id
           }, function() {
             $scope.showSuccessMsg('删除表单成功');
-            // $scope.queryFormTable();
             $scope.gotoList();
+            // $scope.queryFormTable();
           });
         }
       });
@@ -113,7 +113,7 @@
         $scope.queryFieldResult = response;
       });
     };
-    //  这很奇怪。。
+    //  表单字段类型的增删改。
     $scope.editFormField = function(id) {
       $scope.editModal({
         id : id,

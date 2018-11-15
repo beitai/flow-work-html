@@ -14,8 +14,11 @@
 
 angular.module('flowableModeler').service('UserService', ['$http', '$q','$window',
     function ($http, $q,$window) {
+
         // var token = $window.localStorage.token;
+        // console.log("用户的token");
         // console.log(token);
+
         var httpAsPromise = function(options) {
             var deferred = $q.defer();
             $http(options).
@@ -44,14 +47,19 @@ angular.module('flowableModeler').service('UserService', ['$http', '$q','$window
             return httpAsPromise({
                 method: 'GET',
                 url: FLOWABLE.CONFIG.contextRoot2  + '/users',
-                params: params
+                params: params,
+                // headers:{'token':token}
             });
         };
 
     }]);
 
-angular.module('flowableModeler').service('GroupService', ['$http', '$q',
-    function ($http, $q) {
+angular.module('flowableModeler').service('GroupService', ['$http', '$q','$window',
+    function ($http, $q,$window) {
+
+        // var token = $window.localStorage.token;
+        // console.log("组的token");
+        // console.log(token);
 
         var httpAsPromise = function(options) {
             var deferred = $q.defer();
@@ -80,7 +88,8 @@ angular.module('flowableModeler').service('GroupService', ['$http', '$q',
                 method: 'GET',
                 // url: FLOWABLE.CONFIG.contextRoot2 + '/groups',
                 url: FLOWABLE.CONFIG.contextRoot2 + '/groupChild',
-                params: params
+                params: params,
+                // headers:{'token':token}
             });
         };
     }]);

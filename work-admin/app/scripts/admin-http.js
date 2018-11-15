@@ -9,6 +9,12 @@
 
   angular.module('adminApp').config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('httpInterceptor');
+    
+    // $httpProvider.defaults.headers.common['Authorization'] = 'Basic MTAwODY6MTIzNDU2';
+    // console.log($httpProvider.defaults.headers)
+    //删除后请求头里不再有 X-Requested-With 属性
+    // delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    //为请求头添加Authorization属性为'code_bunny'  
   }]);
 
   angular.module('adminApp').factory('httpInterceptor', ['$q', '$injector', '$window', '$rootScope', function ($q, $injector, $window, $rootScope) {
@@ -79,7 +85,7 @@
           params: conf.params,
           data: conf.data,
           responseType: conf.responseType,
-          headers: angular.extend(conf.headers||{},{'Token': $window.localStorage.token})
+          headers: angular.extend(conf.headers||{},{'Token': $window.localStorage.token,'access_token': $window.localStorage.access_token})
         })
           .then(function successCallback(response) {
             callback(response.data);

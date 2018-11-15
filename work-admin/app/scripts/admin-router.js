@@ -86,7 +86,7 @@
         url: '/form/?:id',
         controller: 'FlowFormController',
         templateUrl: 'views/flow/form.html'
-      })
+      });
       // .state('main.flow.form', {
       //   url: '/form/?:id',
       //   controller: 'FlowFormController',
@@ -110,7 +110,7 @@
       //   controller: 'FlowInstanceController',
       //   templateUrl: 'views/form/instance.html'
       // }) 
-      ;
+      
 
       $urlRouterProvider.otherwise('/modeler/flow/');
     });

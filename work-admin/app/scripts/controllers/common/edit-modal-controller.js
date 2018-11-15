@@ -20,8 +20,7 @@
     $scope.instanceService = $scope.FlowService($scope.restUrl.flowInstances);
 
     if ($scope.id) {
-      $scope.modalTitle = "修改" + $scope.title;
-
+      $scope.modalTitle = "修改" + $scope.title; 
       $scope.service.get({
         urlPath: '/' + $scope.id
       }, function (data) {
@@ -337,14 +336,13 @@
 
     // 这个是三层导航的 
     if($scope.key == 'nav'){
-      // console.log("流程开启")
+      // console.log("流程开启") 查询所有分类
       $scope.modalTitle = $scope.title;
       $scope.service.get({
         urlPath : '/' + $scope.id
       }, function(data) {
         // $scope.formData = angular.extend($scope.formData, data);
-        $scope.nav = data; 
-        // console.log($scope.nav);
+        $scope.nav = data;  
       });
        // 第一层
       $scope.b = function(){
@@ -353,15 +351,15 @@
       }
       // 第二层
       $scope.bb = function(data){
-        $scope.category = data;
-        // console.log('----------------------i')
-        // console.log(i);
+        $scope.category = data; 
         $(".AreaCenter").css({"width":"30%"});
         $(".AreaRight").show();
         // console.log(data);
         $scope.queryParams = {};
         $scope.queryParams.name = null;
         $scope.queryParams.category = data;
+        // 定义的。  用来查第三层。。 
+        $scope.queryParams.latestVersion = "true";
         $scope.definitionService.get({
           params : $scope.queryParams 
         }, function(response) {
@@ -373,12 +371,14 @@
       } 
 
       // 在搜索里查出所有的定义流程
-      $scope.queryDefinition = function () {
+      $scope.queryDefinition = function () { 
+        $scope.queryParams.latestVersion = "true";
         $scope.definitionService.get({
+          params : $scope.queryParams 
         }, function (response) {
           $scope.definitions = response.data;
           $scope.count = response.total;
-          // console.log($scope.definitions);
+          console.log($scope.definitions);
           // console.log($scope.count);
         });
       };
@@ -446,7 +446,6 @@
     $scope.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
-
 
   });
 })();

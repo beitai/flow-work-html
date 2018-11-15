@@ -251,8 +251,9 @@
           <!-- {{count}} --> 
           <!-- ng-if="option.id!='标识三:1:17539'"  queryParams.processDefinitionId -->
        <select class="form-control" chosen ng-model="queryParams.name" placeholder-text-single="'选择流程定义'" no-results-text="'没有结果匹配'">
-          <option value="">全部</option>         
+          <option value="">全部</option>        
           <option ng-repeat="option in definitions" value="{{option.name}}" > {{option.name+' (v'+option.version+')'}}</option>
+          <option style="display:none" ng-repeat="option in definitions" value="{{option.name}}" ng-show> {{option.name+' (v'+option.version+')'}}</option>
         </select>
         <span class="input-group-btn">
           <button type="button" class="btn btn-info" ng-click="queryTask()">搜索</button>
@@ -283,9 +284,11 @@
         <ul> 
               <li ng-repeat="item in queryResult">
               <!-- {{item}} {{item.name}} -->
-              {{item.name}}  (v{{item.version}})
-              <button type="button" class="btn btn-danger btn-xs pull-right" style="margin-right:15px;" ng-click="createInstance1(item.name,item.id)">启动</button>
-              <button type="button" class="btn btn-info btn-xs pull-right" style="margin-right:15px;" ng-click=gotoDetail(item.id)>明细</button>
+              <!-- <p ng-if="item.version == count">   -->
+                {{item.name}}  (v{{item.version}})  
+                <button type="button" class="btn btn-danger btn-xs pull-right" style="margin-right:15px;" ng-click="createInstance1(item.name,item.id)">启动</button>
+                <button type="button" class="btn btn-info btn-xs pull-right" style="margin-right:15px;" ng-click=gotoDetail(item.id)>明细</button>
+              <!-- </p> -->
             </li>
             <li ng-if="count==0"> 
               暂时没有可以启动的流程图

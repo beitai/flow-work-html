@@ -100,9 +100,14 @@
       id : 'instance',
       data : 'queryResult',
       colModels : [
-        {name:'实例ID',index:'id',width:'10%'},
+        {name:'实例ID',index:'id',width:'7%'},
         {name:'流程名称',index:'processDefinitionName',width:'10%'},
         {name:'流程标识',index:'processDefinitionId',sortable:true,width:'10%'},
+        {name:'状态',index:'endTime',width:'7%',
+          formatter : function() {
+            return '<span>{{row.endTime==null?"进行中":"已完成"}}</span>';
+          }
+        },
         {name:'开始时间',index:'startTime',sortable:true,width:'10%'},
         {name:'结束时间',index:'endTime',sortable:true,width:'10%'},
         {name:'业务标识',index:'businessKey',sortable:true,width:'10%'},

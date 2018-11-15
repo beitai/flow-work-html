@@ -16,6 +16,7 @@
     'localytics.directives',
     'perfect_scrollbar',
     'builder.directive',
+    'ngCookies',
   ]).run(function($rootScope, notify, $state, $timeout, $uibModal, RestService, contextRoot, restUrl) {
     // 根内容
     $rootScope.contextRoot = contextRoot;
@@ -115,6 +116,7 @@
         scope : angular.extend($rootScope.$new(),args)
       });
     };
+
     // 编辑  新添加一个用来搞联级导航的。
     $rootScope.navModal = function(args) {
       $uibModal.open({
@@ -153,18 +155,19 @@
       });
     };
     // 状态的还不知道干嘛用的      。。。。列表和详细信息？
-    // 返回上一层
-    // 用来开启流程图的。
+    // 返回上一层    根据  $statte.current  路由状态  来做判断。 这个是详情的
     $rootScope.gotoDetail = function(id){
       $state.go($state.current,{id:id});
       // console.log($state.current);
       // console.log(id);
     };
+
     $rootScope.gotoDetail1 = function(id,status){ 
       //任务的详情，多加了一个 状态，用来判断是否有那个，status
       $state.go($state.current,{id:id,status:status});  
     };
-    // 列表 
+
+    // 列表  相当于返回上一层
     $rootScope.gotoList = function(id){
       $state.go($state.current,{id:id});
     };
@@ -178,7 +181,7 @@
         nothingSelected : "没有选项被选中" 
     };
     
-    // 也不知道啥意思，很懵B 一秒之后执行的？  导出
+    // 也不知道啥意思，很懵B 一秒之后执行的？  导出 不太懂
     $rootScope.windowExportFile = function(data,fileName){
       $rootScope.showProgress();
       $timeout(function() {

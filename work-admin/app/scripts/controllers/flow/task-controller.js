@@ -18,130 +18,159 @@
     $scope.queryParams = $scope.detailId === '0' ? $scope.getCacheParams() : {};
     $scope.queryResult = {};
     $scope.selectedItem = null;
-    // 根据用户名来获取相应的 token 和 name
-    $scope.token = $scope.IdmService($scope.restUrl.token);
-
-    // alert($("input").attr("css")); 
-    $(".card .tab-content .form-group .form-control").css({"border":"0","border-bottom":"1px solid"})
-
-    // 流程图日志详情
-    $scope.logService = $scope.FlowService($scope.restUrl.log);
-       $scope.logService.get({
-        urlPath:"/userId/"+$scope.loginUser.userId
-      },function(response){
-        console.log("日志输出成功"); 
-        $scope.log = response; 
-        $scope.name = $window.localStorage.userName;
-      });
-     
+    // 根据用access_token获取相应的 token 和 name,id
+    $scope.token = $scope.IdmService($scope.restUrl.token); 
     //这个是定义的流程，  算是搜索的？  
     $scope.queryDefinition = function () {
       $scope.definitionService.get({
-      }, function (response) {
-        console.log(response);
+      }, function (response) { 
         $scope.definitions = response.data;
       });
     };
 
-    // 查看任务详情的
-    $scope.id = null;
+    // 查看任务详情的 
     $scope.queryDetail = function (id,status) {
-      var str = $location.search(); 
-      // 把可阅人的的值，通过url给传过来。
-      console.log("这个是可阅人的状态");
-      console.log($location.search().status);
+      // console.log("这个是获取可阅人的状态");
+      var str = $location.search();   
       $scope.status = $location.search().status;
+      
+      // 根据那边系统跳转过来，重置用户信息
+      $scope.user()
 
-      // 同步 用户的id 和姓名  
-      $scope.userName = $location.search()["userName"]; 
-      console.log("name用来token的同步测试"); 
-      if($scope.userName!=null){ 
-        // 请求token的接口
-          $scope.token.get({  
-            urlPath:"/"+$scope.userName
-          },function(response){
-            console.log("输出token,name");
-            console.log(response.token);
-            console.log(response.name);  
-            // window.localStorage.token 指的是浏览器本地的缓存
-            $window.localStorage.token = "Bearer "+response.token;
-            $window.localStorage.userName = response.name; 
-            // $scope.loginUser.token 是否是实时指的用户的登录信息?
-            $scope.loginUser.userName = response.name; 
-            $scope.loginUser.token = "Bearer "+response.token;
-            // $window.localStorage.userId = response.userId; 
-            // $scope.loginUser.userId = response.userId;
-          }); 
-      }
-
+      // 查询任务详情的方法
       $scope.taskService.get({
         urlPath: '/' + id
       }, function (response) {
         $scope.selectedItem = response;
-        // 表单标识
-        console.log("表单标识");
-        console.log($scope.selectedItem);   
-        // console.log($scope.selectedItem.formKey);
-        if($scope.selectedItem.formKey!=null && $scope.selectedItem.formKey!=""){
-          $scope.form_definitionService.get({
-            urlPath: '/json',
-            params: {
-              processInstanceId: $scope.selectedItem.processInstanceId,
-              formKey: $scope.selectedItem.formKey
-            }
-          }, function (response) {
-            $scope.id = response.bytearrayId
-            // console.log("查询出来的格式 id")
-            // console.log($scope.id);
-            // console.log("查询出来的格式 json 对应值是数组")
-            // console.log(response.json);
-            if (response.json === "") { return; }
-            
-            $scope.forms1 = $.parseJSON(response.json);
-            
-            if ($scope.forms1.length > 0) {
-              $scope.forms = []; 
-              angular.forEach($scope.forms1, function (forms, index) { 
-                // ------------------------------------以下是做表单的是否可填
-                // 拿出各行里面的对应的组件，无论多少个多少放在 .components[0]里面 
-                // console.log($scope.forms1[index].forms);
-                // 这个是根据json的结构， 一行对应的4(会变，但一般有多少个就输多少个)个组件放在$scope.forms1[index].forms里面
-                // angular.forEach($scope.forms1[index].forms,function (value,key){
-                //   // console.log(value);  value.components[0] 输出里面的所有组件   
-                //   // console.log(value.components[0]);
-                //   if(value.components[0]!= undefined ){
-                //     console.log(value.components[0].properties);
-                //     // 这是是根据初始值来判断是文本还是输入框，如果是输入框的话，可以把它的样式进行更改
-                //     if(value.components[0].properties.initValue != undefined ){
-                //       value.components[0].properties.visible = "disabled";
-                //       value.components[0].properties.style.border = "0px";
-                //       value.components[0].properties.style["border-bottom"] = "1px solid";
-                //     }
-                //   }
-                // }) 
-                // console.log($scope.forms1[index].forms[index]);
-                // console.log($scope.forms1[index].forms[index].components[0]); 
-                // console.log($scope.forms1[index].forms[index].components[0].properties); 
-                // if($scope.forms1[index].forms[index].components[0].properties.initValue != undefined ){
-                //   $scope.forms1[index].forms[index].components[0].properties.visible = "disabled";
-                // }
+        // 把图片给查询出来
+        $scope.img = $scope.instanceService.url + '/' + $scope.selectedItem.processInstanceId + '/image.png?token=' + $scope.loginUser.token;
 
-                $scope.forms[index] = {};
-                $scope.forms[index].component = $scope.forms1[index];
-              });
-              // 这个是最后的 在页面输出组件的json 格式
-              // console.log($scope.forms);
-            } 
-          }); 
-        }
+        console.log("表单标识");
+        console.log($scope.selectedItem);
+        // 执行查询流程日记的任务
+        $scope.log(); 
+        // 执行表单输出的任务
+        $scope.form();
+        
+     
       });
     };
+
+    // 这个是跳转的方法。 另一套系统跳过来的。
+    $scope.user = function(){
+      // 同步 用户的id 和姓名  
+      $scope.access_token = $location.search()["access_token"];  
+      if($scope.access_token!=null){ 
+        $window.localStorage.access_token = $scope.access_token;
+        // 请求token的接口
+          $scope.token.get({  
+            urlPath:"/"+$scope.access_token
+          },function(response){ 
+            // console.log(response); 
+            // window.localStorage.token 指的是浏览器本地的缓存
+            // $scope.loginUser.token 是否是实时指的用户的登录信息?
+            $window.localStorage.token = response.token;
+            $window.localStorage.userName = response.name;
+            $window.localStorage.userId = response.id;  
+            $window.localStorage.userId = response.id;  
+            $window.localStorage.userAvatar = response.avatar;
+            $scope.loginUser.userName = response.name; 
+            $scope.loginUser.token = response.token;
+            $scope.loginUser.userId = response.id;  
+            $scope.loginUser.userAvatar = response.avatar;  
+          }); 
+      }
+  }
+    
+    // 表单输出和是否填写判断
+    $scope.form = function(){
+      if($scope.selectedItem.formKey!=null && $scope.selectedItem.formKey!=""){
+        $scope.form_definitionService.get({
+          urlPath: '/json',
+          params: {
+            processInstanceId: $scope.selectedItem.processInstanceId,
+            formKey: $scope.selectedItem.formKey
+          }
+        }, function (response) {
+          $scope.id = response.bytearrayId
+          // console.log("查询出来的格式 id")
+          // console.log($scope.id);
+          // console.log("查询出来的格式 json 对应值是数组")
+          // console.log(response.json);
+          if (response.json === "") { return; }
+          $scope.forms1 = $.parseJSON(response.json);
+          if ($scope.forms1.length > 0) {
+            $scope.forms = []; 
+            angular.forEach($scope.forms1, function (forms, index) { 
+              // ------------------------------------以下是做表单的是否可填
+              // 拿出各行里面的对应的组件，无论多少个多少放在 .components[0]里面 
+              // console.log($scope.forms1[index].forms);
+              // 这个是根据json的结构， 一行对应的4(会变，但一般有多少个就输多少个)个组件放在$scope.forms1[index].forms里面
+              if($scope.selectedItem.form_update == '不可填'){   
+                angular.forEach($scope.forms1[index].forms,function (value,key){
+                  // console.log(value);  value.components[0] 输出里面的所有组件   
+                  // console.log(value.components[0]);
+                  if(value.components[0]!= undefined ){
+                    // console.log(value.components[0].properties);
+                    // 这是是根据初始值来判断是文本还是输入框，如果是输入框的话，可以把它的样式进行更改
+                    if(value.components[0].properties.initValue != undefined ){
+                      value.components[0].properties.visible = "disabled";
+                      value.components[0].properties.style.border = "0px";
+                      value.components[0].properties.style["border-bottom"] = "1px solid";
+                    }
+                  }
+                }) 
+             }
+              // console.log($scope.forms1[index].forms[index]);
+              // console.log($scope.forms1[index].forms[index].components[0]); 
+              // console.log($scope.forms1[index].forms[index].components[0].properties); 
+              // if($scope.forms1[index].forms[index].components[0].properties.initValue != undefined ){
+              //   $scope.forms1[index].forms[index].components[0].properties.visible = "disabled";
+              // }
+              $scope.forms[index] = {};
+              $scope.forms[index].component = $scope.forms1[index];
+            });
+            // 这个是最后的 在页面输出组件的json 格式
+            // console.log($scope.forms);
+          } 
+        }); 
+      }
+    }
+         // 组件
+    // $scope.queryjson = function (id) { 
+    // $scope.form_definitionService.get({
+    //   urlPath: '/' + id + '/json'
+    // }, function (response) {
+    //   console.log($.parseJSON(response.json));
+    //   $scope.forms1 = $.parseJSON(response.json);
+    //   if($scope.forms1.length > 0){
+    //     $scope.forms = [];
+    //     angular.forEach($scope.forms1, function(forms,index){
+    //       $scope.forms[index] = {};
+    //       $scope.forms[index].component = $scope.forms1[index];
+    //     });
+    //   }  
+    // });
+    // };
+
+    // 这个是之前做图片更新无效，然后用另外一种方法替换掉。
+    // $scope.count = 0;
+    // $scope.getImageUrl = function (id,con) {
+    //   $scope.count ++;
+    //   console.log("执行"+$scope.count);
+    //   if (angular.isDefined(id)) {
+    //     var time = new Date().getTime();   
+    //     console.log("图片测试");
+    //     console.log(con);  
+    //     return $scope.instanceService.url + '/' + id + '/image.png?token=' + $scope.loginUser.token+con;
+    //   }
+    //   return null;
+    // };
 
     //  提交表单数据 
     $scope.subjson = function (id,component) { 
       var components = [];
-      angular.forEach(component,function(com,index){
-          console.log(com.component);
+      angular.forEach(component,function(com,index){ 
           components.push(com.component);
       })
       console.log(components); 
@@ -163,104 +192,100 @@
                   id:$scope.id
                 }
               }, function (response) {
-                console.log('提交成功');
+                console.log('提交成功'); 
+                $scope.showSuccessMsg('表单提交成功');
               }); 
             }
           });
         });
     };
 
-    // 组件
-    // $scope.queryjson = function (id) { 
-    // $scope.form_definitionService.get({
-    //   urlPath: '/' + id + '/json'
-    // }, function (response) {
-    //   console.log($.parseJSON(response.json));
-    //   $scope.forms1 = $.parseJSON(response.json);
-    //   if($scope.forms1.length > 0){
-    //     $scope.forms = [];
-    //     angular.forEach($scope.forms1, function(forms,index){
-    //       $scope.forms[index] = {};
-    //       $scope.forms[index].component = $scope.forms1[index];
-    //     });
-    //   }  
-    // });
-    // };
-
-
-    $scope.backTask = function (item) {
-      $scope.confirmModal({
-        title: '确认驳回任务',
-        confirm: function () {
-          $scope.taskService.put({
-            urlPath: '/' + item.id + '/complete',
-            data: '{"variables":[{"name":"submitType","type":"string","value":"n"}]}'
-          }, function () {
-            $scope.showSuccessMsg('任务驳回成功');
-            $scope.queryDetail(item.id);
-
-            $scope.taskService1.get({  
-              urlPath: '/' + item.id
-              },function(data){
-                console.log(data);
-              });
-
-            $timeout(function(){location.reload()},1000); 
-          });
-        }
-      });
-    };
-
-
-
-    $scope.queryTask = function () {
-     
-     
-      $scope.userService.get({
-      }, function (response) {
-        $scope.users = response;
-
-        // 先让他默认查询负责人的
-        if($scope.queryParams.tasktype==null){
-          $scope.queryParams.tasktype = 'taskAssignee'; 
-        }
-        $scope.taskService.get({
-          params: $scope.queryParams
+    //流程日记输出的方法 
+    $scope.log = function (){
+           // 流程图日志详情
+        // 用来把日志的 id 换成 name
+        $scope.userService.get({
         }, function (response) {
-          $scope.queryResult = response; ;
-          // 把负责人的id 改为 名字， 在列表里面。。
-          angular.forEach($scope.queryResult.data,function(each){
-            // console.log(each);
-            if(each.assignee==null)
-            {
-              each.assigneeName = '空';
-            }else{   
-                angular.forEach($scope.users.data,function(user){
-                  if(each.assignee==user.id){
-                      each.assigneeName = user.name
-                    }
-            }); 
-            // var groupsPromise = $scope.userService.get({
-            //   urlPath: '/'+each.assignee
-            // }, function (response) {
-            //   console.log(response);
-            //   each.assigneeName =  response.name
-            // });
-            // var groupsPromise = $scope.userService.get({
-            // }, function (response) {
-              // angular.forEach(response.data,function(each){
-                // if(each.assignee==each.id){
-                  // each.assigneeName = each.name
-                // }
-              // }
-            //   console.log(response);
-            //   each.assigneeName =  response.name
-            // });
-          }
+          $scope.users = response; 
+          // 根据流程的标识来把日志的表格给弄出来
+          $scope.logService = $scope.FlowService($scope.restUrl.tasklog);
+          $scope.queryParams.procDefId = $scope.selectedItem.processDefinitionId;
+          $scope.queryParams.sortName = 'time';
+          $scope.logService.get({ 
+            params: $scope.queryParams
+          },function(response){ 
+            // console.log(response); 
+            $scope.tasklogResult = response.data;  
+            // 把负责人的id 改为 名字， 在列表里面。。
+              angular.forEach(response.data,function(each){
+                  angular.forEach($scope.users.data,function(user){ 
+                    // console.log(each);console.log(user)
+                      if (each.userId==user.id) {
+                          each.username = user.name 
+                      }
+                  }); 
+              });  
+          });
+
+        });
+    } 
+    // 流程日记输出的方法
+    $scope.logOptions = {
+        id: 'tasklog',
+        data: 'tasklogResult',
+        isPage: false,
+        colModels: [ 
+          { name: 'id', index: 'id',width: '20%' },
+          { name: '任务名称', index: 'taskName',width: '20%' },
+          { name: '操作人', index: 'username',width: '20%' },
+          {name:'状态',index:'status', width: '20%',
+            formatter : function() {
+                return '<span ng-if="row.status==2">结束</span> <span ng-if="row.status!=2">{{row.status== 0 ?"反驳":"完成"}}</span>';
+              }
+          },
+          { name: '操作时间', index: 'time', width: '20%',sortable: true, },
+        ], 
+        loadFunction: $scope.log,
+        queryParams: $scope.queryParams,
+        sortName: 'time',
+        sortOrder: 'desc',
+      };
+
+    // 查询所有任务的， 把负责人id 改成负责人名字
+    $scope.queryTask = function () {
+  
+      $scope.userService.get({
+        }, function (response) {
+          $scope.users = response;
+
+          $scope.taskService.get({
+            params: $scope.queryParams
+          }, function (response) {
+            $scope.queryResult = response;
+            // 把负责人的id 改为 名字， 在列表里面。。
+            angular.forEach($scope.queryResult.data,function(each){
+              // console.log(each);
+              if(each.assignee==null)
+              {
+                each.assigneeName = '空';
+              }else{   
+                  angular.forEach($scope.users.data,function(user){
+                    if(each.assignee==user.id){
+                        each.assigneeName = user.name
+                      }
+              }); 
+              // 这个不行，查太多次用户。
+              // var groupsPromise = $scope.userService.get({
+              //   urlPath: '/'+each.assignee
+              // }, function (response) {
+              //   console.log(response);
+              //   each.assigneeName =  response.name
+              // }); 
+            }
+          }); 
         }); 
+
       });
-      
-    });
     };
 
     $scope.editTask = function (item) {
@@ -314,7 +339,7 @@
         });
       });
     };
-
+    // 完成任务
     $scope.completeTask = function (item) {
       $scope.confirmModal({
         title: '确认完成任务',
@@ -332,16 +357,39 @@
               console.log(data);
             });
             
-            $timeout(function(){location.reload()},1000); 
-            // console.log("图片的重新获取");
-            // console.log(item.processInstanceId);
-            // console.log($scope.getImageUrl(item.processInstanceId));
-            // $scope.getImageUrl(item.processInstanceId);
+            // $timeout(function(){location.reload()},1000);  
+            // console.log($scope.getImageUrl(item.processInstanceId)); 
+            console.log("图片的重新获取"); 
+            $scope.img = $scope.instanceService.url + '/' + $scope.selectedItem.processInstanceId + '/image.png?token=' + $scope.loginUser.token+"&"+new Date().getTime();
           });
         }
       });
     };
+    // 驳回任务
+    $scope.backTask = function (item) {
+      $scope.confirmModal({
+        title: '确认驳回任务',
+        confirm: function () {
+          $scope.taskService.put({
+            urlPath: '/' + item.id + '/complete',
+            data: '{"variables":[{"name":"submitType","type":"string","value":"n"}]}'
+          }, function () {
+            $scope.showSuccessMsg('任务驳回成功');
+            $scope.queryDetail(item.id);
 
+            $scope.taskService1.get({  
+              urlPath: '/' + item.id
+              },function(data){
+                console.log(data);
+              });
+
+            // $timeout(function(){location.reload()},1000); 
+            console.log("图片的重新获取"); 
+            $scope.img = $scope.instanceService.url + '/' + $scope.selectedItem.processInstanceId + '/image.png?token=' + $scope.loginUser.token+"&"+new Date().getTime();
+          });
+        }
+      });
+    };
     $scope.deleteTask = function (item) {
       $scope.confirmModal({
         title: '确认删除任务',
@@ -356,14 +404,8 @@
       });
     };
 
-    $scope.getImageUrl = function (id) {
-      // var time = new Date().getTime();   
-      if (angular.isDefined(id)) {
-        // return $scope.instanceService.url + '/' + id + '/image.png?token=' + $scope.loginUser.token+"?"+time;
-        return $scope.instanceService.url + '/' + id + '/image.png?token=' + $scope.loginUser.token;
-      }
-      return null;
-    };
+
+
 
     $scope.tableOptions = {
       id: 'task',
@@ -373,12 +415,12 @@
         { name: '任务名称', index: 'name', width: '8%' },
         { name: '流程标识', index: 'processDefinitionId', sortable: true, width: '8%' },
         // { name: '负责人', index: 'assignee', sortable: true, width: '7%' },
-        { name: '负责人', index: 'assigneeName', sortable: true, width: '7%' },
-        { name: '所有人', index: 'owner', sortable: true, width: '7%' }, 
-        {name:'状态',index:'status', width: '7%',
+        { name: '负责人', index: 'assigneeName',  width: '7%' },
+        // { name: '所有人', index: 'owner', sortable: true, width: '7%' }, 
+        {name:'状态',index:'endTime', width: '7%',
         formatter : function() {
-          return '<span>{{row.status==""?"可操作":"可阅"}}</span>';
-        }
+          return '<span>{{row.endTime==null?"未处理":"已处理"}}</span>';
+          }
         },
         { name: '开始时间', index: 'startTime', sortable: true, width: '10%' },
         { name: '结束时间', index: 'endTime', sortable: true, width: '10%' },
@@ -449,7 +491,7 @@
       $scope.taskService.get({
         urlPath: '/' + id + '/identity-links'
       }, function (response) {
-        $scope.queryIdentityResult = response;
+        $scope.queryIdentityResult = response; 
       });
     };
 

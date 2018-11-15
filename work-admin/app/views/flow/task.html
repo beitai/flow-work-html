@@ -173,11 +173,10 @@
         </div>
       </div>
       <div class="tab-content">
-        <div class="tab-pane text-center" ng-class="{'active':active==0}">
-          <!-- {{getImageUrl(selectedItem.processInstanceId)}}
-            <br>
-            {{selectedItem.processInstanceId}} -->
-          <img ng-src="{{getImageUrl(selectedItem.processInstanceId)}}" />
+        <div class="tab-pane text-center" ng-class="{'active':active==0}"> 
+          <!-- <img ng-src="{{getImageUrl(selectedItem.processInstanceId,'')}}" /> --> 
+            <img ng-src="{{img}}" alt="">
+
         </div>
         <div class="tab-pane" ng-class="{'active':active==1}">
           <table ng-table="variableTableOptions" class="table table-striped ng-table">
@@ -198,15 +197,18 @@
               </div>
               <!-- <button type="button" class="btn btn-info btn-block" ng-click="subjson(selectedItem.id,component)" ng-show="selectedItem.endTime == null">提交表单数据</button> -->
             </div>
-          </div>
+          </div> 
           <button type="button" class="btn btn-info btn-block" style="margin-top: 10px;" ng-click="subjson(selectedItem.id,forms)"
-            ng-show="selectedItem.endTime == null">提交表单数据</button>
+            ng-show="selectedItem.endTime == null && selectedItem.form_update != '不可填'">提交表单数据</button>
         </div>
         <div class="tab-pane" ng-class="{'active':active==4}">
-          <!-- <p>用来放流程日志的数据</p> -->
-          <div ng-repeat="item in log">
-            <p>{{$index+1}}.  {{name}} {{item.desc}} <span style="float: right;">{{item.createTime}}</span></p>
-          </div>  
+          <!-- <p>用来放流程日志的数据</p> --> 
+          <!-- <div ng-repeat="item in tasklogResult"> 
+            <p>{{$index+1}}.  {{item.time}}, {{item.username}} {{item.status == 0 ?'反驳':'完成'}}任务 {{item.taskName}}
+            <p ng-if="item.status == 2">{{$index+2}}.  {{item.time}}, {{item.username}} 结束整条流程</p>
+          </div>  -->
+          <table ng-table="logOptions" class="table table-striped ng-table">
+          </table>
           
         </div>
       </div>

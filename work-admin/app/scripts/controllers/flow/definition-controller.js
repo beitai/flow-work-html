@@ -35,15 +35,15 @@
         params : $scope.queryParams 
       }, function(response) {
         $scope.queryResult = response;
-        console.log($scope.queryResult); 
+        // console.log($scope.queryParams);
+        // console.log($scope.queryResult); 
       });
 
       // 查询出所有的分类
       $scope.categoryService.get({ 
           urlPath : '/parentId/1'
       }, function(response) {
-        $scope.category =response; 
-          // console.log(response);
+        $scope.category =response;   
       });
     };
    // 删除流程定义 

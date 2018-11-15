@@ -30,7 +30,7 @@
       });
     };
 
-    // 做中文的正则判断 
+    // 做首字母中文的正则判断 
     // $validatorProvider.register('number', {
     //   invoke: 'watch',
     //   validator: /^[-+]?[0-9]*[\.]?[0-9]*$/,
@@ -38,19 +38,19 @@
     // });
     // ^[\u4e00-\u9fa5_a-zA-Z]+$  0-9
 
+    // 查询流程图下的所有。
     $scope.queryModel = function() {
       $scope.modelService.get({
         params : $scope.queryParams
       }, function(response) {
-        $scope.queryResult = response;
-        console.log($scope.queryResult)
+        $scope.queryResult = response; 
       });
+
       // 查询出了流程图下的所有分类
       $scope.categoryService.get({ 
         urlPath : '/parentId/1'
       }, function(response) {
         $scope.category = response;  
-        console.log(response);
       });
     };
     
@@ -105,6 +105,7 @@
       });
     };
     
+    // 用来做分类的修改或添加
     $scope.editModel = function(id) { 
       $scope.editModal({
         id : id,

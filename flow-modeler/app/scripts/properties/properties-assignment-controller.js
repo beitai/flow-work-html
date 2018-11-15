@@ -1321,7 +1321,17 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
             $scope.popup.assignmentObject.static.candidateUsers.push($scope.init.assignment.candidateUsers[i]);
         }
     }
+// 可阅人的加和减
+    // Click handler for + button after enum value
+    $scope.addCandidateUserValue = function (index) {
+        $scope.popup.assignmentObject.static.candidateUsers.splice(index + 1, 0, { value: '' });
+        console.log()
+    };
 
+    // Click handler for - button after enum value
+    $scope.removeCandidateUserValue = function (index) {
+        $scope.popup.assignmentObject.static.candidateUsers.splice(index, 1);
+    };
 
     //fill the static area 填充静态区域
     // if ($scope.assignment.assignee) {
@@ -1428,15 +1438,7 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
     };
 
 
-    // Click handler for + button after enum value
-    $scope.addCandidateUserValue = function (index) {
-        $scope.popup.assignmentObject.static.candidateUsers.splice(index + 1, 0, { value: '' });
-    };
-
-    // Click handler for - button after enum value
-    $scope.removeCandidateUserValue = function (index) {
-        $scope.popup.assignmentObject.static.candidateUsers.splice(index, 1);
-    };
+  
 
     $scope.setSearchType = function () {
         $scope.popup.assignmentObject.assignmentSourceType = 'search';
@@ -1467,20 +1469,22 @@ angular.module('flowableModeler').controller('FlowableAssignmentPopupCtrl3',
         // console.log("测试==================================="); 
         console.log($scope.assignment);    
         $scope.value1 = $scope.assignment.candidateUsers;
+        console.log($scope.value1)
         console.log("循环===================================");      
         // 把数据里面的用户给赋值到 用户里面去  根据数组id把对应的用户给查出来后，赋值到用户
         $scope.property.value = ""
-        angular.forEach($scope.value1,function(value,key){
-            // console.log(value.value);
-            $scope.property.value += value.value + ","
-            $scope.updatePropertyInModel($scope.property); 
-        }); 
-        console.log($scope.property);    
-
+        if($scope.value1!=undefined){       
+            angular.forEach($scope.value1,function(value,key){
+                // console.log(value.value);
+                $scope.property.value += value.value + ","
+                $scope.updatePropertyInModel($scope.property); 
+            }); 
+        } 
+        console.log($scope.property);     
+        $scope.updatePropertyInModel($scope.property);
         $scope.close();
 
-        // $scope.property.key = "oryx-process_potentialstarteruser"
-        
+        // $scope.property.key = "oryx-process_potentialstarteruser" 
         //  $scope.property.value.assignment.candidateGroups相当于是选中组的值
         // $scope.value1 = $scope.property.value.assignment.candidateUsers;
         // console.log("循环===================================");     
